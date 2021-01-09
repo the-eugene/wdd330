@@ -1,6 +1,6 @@
 function init(){
 const links = [
-    {label: "Week1 Notes", url: "week1"}
+    {label: "Week1 Notes", url: "week1/index.html"}
   ];
 
 var contents=document.getElementById("Contents");

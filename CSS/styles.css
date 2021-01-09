@@ -40,16 +40,7 @@ main {
   grid-template-areas:
     "items form";
   grid-gap: 0;
-  grid-template-columns: 1fr 500px;
-}
-
-div.message{
-  max-width: 400px;
-  max-height: 200px;
-  margin: auto;
-  background: #fffc;
-  padding: 10px;
-  border-radius: 5px;
+  grid-template-columns: 1fr 1fr;
 }
 
 form {
