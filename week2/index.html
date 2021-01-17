@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WDD 330 Week 1 Notes</title>
+    <link rel="stylesheet" href="../CSS/styles.css" />
+    <script src="../JS/main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>WDD 330 Week 2 Reading Notes</h1>
+    </header>
+    <main>
+        <div class="container">
+            <h3>Javascript Novice to Ninja Ch 2 </h3>
+            <ul>
+                <li>There’s no need to actually use a semicolon to terminate a statement - I always put in semicolons. I
+                    can see issues with omitting them.</li>
+                <li>Best practice to put statements on individual lines - pretty normal for readability</li>
+                <li>undefined, NaN, Infinity are not reserved words but should be treated as such</li>
+                <li><strong>Symbol Data Type</strong> - this is new to me - <a
+                        href="https://javascript.info/symbol">more info</a>
+                    <ul>
+                        <li>introduced in ES6 - A &ldquo;symbol&rdquo; represents a unique identifier.</li>
+                        <li>Can be used for array index</li>
+                        <li> A value of this type can be created using Symbol(): <code><br>
+                                let id = Symbol(&quot;id&quot;); // id is a symbol with the description "id"</code><br>
+                        </li>
+                        <li>Two symbols with the same description are <strong>not</strong> equal:<code> <br>
+                                let id1 = Symbol(&quot;id&quot;); let id2 = Symbol(&quot;id&quot;); alert(id1 == id2);
+                                // false</code></li>
+                        <li>Symbols don&rsquo;t auto-convert to a string</li>
+                        <li>Symbols allow us to create &ldquo;hidden&rdquo; properties of an object, that no other part
+                            of code can accidentally access or overwrite.</li>
+                        <li>If we want to use a symbol in an object literal {...}, we need square brackets around it.
+                        </li>
+                        <li>Symbolic properties do not participate in for..in loop.</li>
+                        <li>there exists a <em>global symbol registry</em>. We can create symbols in it and access them
+                            later, and it guarantees that repeated accesses by the same name return exactly the same
+                            symbol<br>
+                            <code>// read from the global registry <br>
+                            </code><code>let id = Symbol.for("id");
+                                // if the symbol did not exist, it is created <br>
+                                <br>
+                                // read it again (maybe from another part of the code) <br>
+                                let idAgain = Symbol.for("id"); // the same symbol <br>
+                                alert( id === idAgain ); // true</code> </li>
+                    </ul>
+                </li>
+                <li>var vs let - let is block scope, var is function scope. Prefer to use let as modern best practice (I
+                    think)</li>
+                <li>Why is var downplayed in the book?
+                    <ul>
+                        <li>I feel it has legitimate use, and I have used it for years.</li>
+                        <li>Convenient to declare your variable when you need it</li>
+                        <li>Less readable.</li>
+                        <li>Must be aware of scope. This can cause bugs. (but is also true if let is used)</li>
+                    </ul>
+                </li>
+                <li>use camelCase</li>
+                <li>properties of primitive data types are immutable</li>
+                <li>Exponentation 2**3; introduced in ES2017 (finally!)</li>
+                <li>null vs undefined
+                    <ul>
+                        <li> 10 + null; // null behaves like zero</li>
+                        <li>10 + undefined; // undefined is not a number</li>
+                    </ul>
+                </li>
+                <li>NaN === NaN; false!</li>
+                <li>Using comparisson with strings works but, upper-case letters are
+                    considered to be &quot;less than&quot; lower-case letters<br>
+                </li>
+            </ul>
+        </div>
+        <div class="container">
+            <h3>Ch 3,4</h3>
+            <ul>
+                <li>The delete operator will remove an item from an array:<br>
+                    delete avengers[3];</li>
+                <li>Destructuring allows us to assign multiple values at the same time, using arrays:<br>
+                    const [x,y] = [1,2];</li>
+                <li>shift() method works in a similar way to the pop() method, but this<br>
+                    removes the first item in the array (also unshift() works like push() but at the begnning)</li>
+                <li>The splice() method removes items from an array then inserts new items in<br>
+                    their place: avengers.splice(3, 1, 'Scarlet Witch'); <br>
+                    <em>array</em>.splice(<em>index</em>,<em> howmany</em>,<em> item1</em>, .....,<em> itemX</em>)
+                    returns the items removed</li>
+                <li>[5, 9, 10].sort(); &lt;&lt; [10, 5, 9] - <strong>careful to pass the callback to sort for numerical
+                        arrays</strong></li>
+                <li> <strong>Set</strong>s are collections of unique values (objects are considered unique) - const list
+                    = new Set();
+                    <ul>
+                        <li>Methods: .add(), .size(), .has(), delete(), .clear()</li>
+                        <li>convert to array Array.from(Set)</li>
+                    </ul>
+                </li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">Spread
+                        Operator</a> (...) </li>
+                <li><strong>Map</strong> maps values or objects to other values or objects.<br>
+                    const romanNumerals = new Map();<br>
+                    romanNumerals.set(1,'I'); //Maps 1 to 'I'
+                    <ul>
+                        <li>.get(key), .has(key), delete(key), clear(), keys(), values(), entries()</li>
+                    </ul>
+                </li>
+                <li>for(const value of avengers){} //iterate over arrays, sets</li>
+                <li>for(const key of romanNumerals.keys()) {} //iterate over maps using keys() (or values())</li>
+                <li>for(const [key,value] of RomanNumerals.entries()) {} both</li>
+                <li>not mentioned <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...in">for...in
+                        loop</a> for object properies.</li>
+                <li>use rest operator(...) for functions with variable number of parameters: function rest(arg1, arg2,
+                    ...args){}</li>
+                <li>Define deault parameters (put after non-default parameters): function hello(name='World') {}</li>
+                <li>Remember arrow functions const add = (x,y) =&gt; x + y; </li>
+                <li>Remember callbacks are functions passed as parameters</li>
+                <li>array.forEach() method calls a function on each element: eg: colors.forEach( (color,index)
+                    =&gt;{...do stuf...});</li>
+                <li>array.map(callback) maps each element of array to new array through the callback</li>
+                <li>array.reduce() combines all elements into one - <a
+                        href="https://www.javascripttutorial.net/javascript-array-reduce/">more detailed explanation</a>
+                </li>
+                <li>array.filter() returns elements only if callback evaluates to true</li>
+            </ul>
+        </div>
+    </main>
+</body>
+
+</html>
