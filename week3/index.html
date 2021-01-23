@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WDD 330 Week 3 Notes</title>
+    <link rel="stylesheet" href="../CSS/styles.css" />
+    <script src="../JS/main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>WDD 330 Week 2 Reading Notes</h1>
+    </header>
+    <main>
+        <div class="container">
+          <h3>Object methods, &quot;this&quot;</h3>
+            <ul>
+              <li>Methods can be added to objects with the dot notation: obj.funct=function(...){...};</li>
+              <li>Methods can be added to object literals: obj={... func: function(...){...} ...} or just obj={... func(..){...} ...}</li>
+              <li>&quot;this&quot; references the object to which the function is attached eg. user.func() <strong>at call time</strong></li>
+              <li>“this” is not bound - can be used in any function (it also means this can be undefined)</li>
+              <li>arrow functions do not have their own this - it is evaluated from the outer function</li>
+              <li>to allow objects to chain functions as in obj.funct().funct2() &quot;this&quot; can be used to return the object in each function.</li>
+          </ul>
+            <h3>Ch 5</h3>
+            <ul>
+              <li>Objects can be created with literal: {...}; or constructor: new Object();</li>
+              <li><em>objects are more or less maps of key value pairs. Keys can be strings or Symbols. Each value acts like a JS variable - can be a number, string, etc, or function, array, or another object</em></li>
+              <li>When variables exist ES6 provides shorthand {var1,var2,...} for {var1:var1, var2:var2}</li>
+              <li>properties can be accessed using dot obj.property or brackets obj[<strong>'property'</strong>] (note property is a string literal here)</li>
+              <li>inside literals - {[expr]:'some value'} - square brackets indicate the result of expression will be used as property name</li>
+              <li>Symbols can be used for propery keys as well - inside square brackets.</li>
+              <li>bracket notation can be used to call methods: obj['func']()</li>
+              <li>&quot;in&quot; keyword can check for property existence: prop in obj. Or, obj.hasOwnProperty('prop');<strong> (inherited properties are ignored by this function)</strong></li>
+              <li>use for...in to iterate through properties for(const prop in obj){...obj[prop]...}</li>
+              <li>Object.keys(obj) array of properties .values() (ES2017) array of values, .entries() (ES2017) array of key-value pairs</li>
+              <li>delete obj.property can remove a property</li>
+              <li>objects are copied by reference (as expected)</li>
+              <li><strong>Using obj as parameters allows for using default arguments inside the object: function func({prop1,prop2='default value', prop3}) is interesting, as the arguments and default arguments can now be in any order. call by func({prop1:'value', prop3:'value'});</strong></li>
+              <li>Use objects as namespace as in myLib.func()</li>
+              <li>Built in objects:
+                <ul>
+                  <li>JSON object can go back and forth from JSON strings to JS objects - JSON.parse() and JSON.stringify()</li>
+                  <li>Math object - has a buch of math methods and constants</li>
+                  <li>Date object - instantiate with new Date() constructor (also see moment.js library)</li>
+                  <li>RegExp - support for regular expressions (<strong>use /regexp/ not &quot;string&quot;</strong> or use new RegExp(&quot;string&quot;))
+                    <ul>
+                      <li font-size="2,2,3,3">g sets the global property to true </li>
+                      <li font-size="2,2,3,3">i sets the ignoreCase property to true </li>
+                      <li font-size="2,2,3,3">m sets the multiline property to true</li>
+                      <li>follows normal regex syntax I already know.</li>
+                      <li>adding ? after a modifier makes it lazy</li>
+                      <li>string functions
+                        <ul>
+                          <li>str.match() returns array of matches (g flag for all matches)</li>
+                          <li>str.search() returns position of first match or -1</li>
+                          <li>str.replace() replaces matches with specified string </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <p>&nbsp;</p>
+      </div>
+        <div  class="container">
+          <h3>Ch 6</h3>
+          <ul>
+              <li>DOM has all the elements of a document in a tree structure</li>
+              <li>nodeType: 
+                <table>
+                  <tbody>
+                    <tr>
+                      <td>Node.ELEMENT_NODE</td>
+                      <td>1</td>
+                      <td>An <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a> node like <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/p">&lt;p&gt;</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div">&lt;div&gt;</a>.</td>
+                    </tr>
+                    <tr>
+                      <td>Node.ATTRIBUTE_NODE</td>
+                      <td>2</td>
+                      <td>An <a href="https://developer.mozilla.org/en-US/docs/Web/API/Attr">Attribute</a> of an <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a>.</td>
+                    </tr>
+                    <tr>
+                      <td>Node.TEXT_NODE</td>
+                      <td>3</td>
+                      <td>The actual <a href="https://developer.mozilla.org/en-US/docs/Web/API/Text">Text</a> inside an <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element">Element</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/API/Attr">Attr</a>.</td>
+                    </tr>
+                    <tr>
+                      <td>Node.CDATA_SECTION_NODE</td>
+                      <td>4</td>
+                      <td>A <a href="https://developer.mozilla.org/en-US/docs/Web/API/CDATASection">CDATASection</a>, such as &lt;!CDATA[[ … ]]&gt;.</td>
+                    </tr>
+                    <tr>
+                      <td>Node.PROCESSING_INSTRUCTION_NODE</td>
+                      <td>7</td>
+                      <td>A <a href="https://developer.mozilla.org/en-US/docs/Web/API/ProcessingInstruction">ProcessingInstruction</a> of an XML document, such as &lt;?xml-stylesheet … ?&gt;.</td>
+                    </tr>
+                    <tr>
+                      <td>Node.COMMENT_NODE</td>
+                      <td>8</td>
+                      <td>A <a href="https://developer.mozilla.org/en-US/docs/Web/API/Comment">Comment</a> node, such as &lt;!-- … --&gt;.</td>
+                    </tr>
+                    <tr>
+                      <td>Node.DOCUMENT_NODE</td>
+                      <td>9</td>
+                      <td>A <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document">Document</a> node.</td>
+                    </tr>
+                    <tr>
+                      <td>Node.DOCUMENT_TYPE_NODE</td>
+                      <td>10</td>
+                      <td>A <a href="https://developer.mozilla.org/en-US/docs/Web/API/DocumentType">DocumentType</a> node, such as &lt;!DOCTYPE html&gt;.</td>
+                    </tr>
+                    <tr>
+                      <td>Node.DOCUMENT_FRAGMENT_NODE</td>
+                      <td>11</td>
+                      <td>A <a href="https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment">DocumentFragment</a> node.</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </li>
+              <li>useful DOM 0: Document.body, Document.images, Document.links,Document.anchors,Document.forms</li>
+              <li><strong>Node lists are NOT Arrays</strong> (I forget that sometimes) Use Array.from() to turn it into array or [...nodelist] (ES6)</li>
+              <li>document.getElementById(ID); gets an element using the id property or null</li>
+              <li>document.getElementsByTagName('tag') or document.getElementsByClassName('class') gets node list of those elements</li>
+              <li>document.querySelector() - use CSS selector - only first element returned (document.querySelectorAll() gets all elements) 
+                <ul>
+                  <li><strong>not a<em> live</em>node list</strong></li>
+                  <li> can be called on<em> any </em>element</li>
+                </ul>
+              </li>
+              <li>childNodes property is a list of all the nodes that are children of the node concerned (children property - element nodes only - not text)</li>
+              <li>parentNode, nextSibling, previousSibling are all also useful</li>
+              <li>.textContent returns text contained in the node including child nodes</li>
+              <li>.getAttribute('attribute'), .setAttribute('attribute', value)</li>
+              <li>Changing className overwrites all  classes assigned, can use classList property instead.
+              </li>
+              <li>classList.add('class'), classList.remove('class'), classList.toggle('class'), classList.contains('class')</li>
+              <li>Create elements - document.createElement('tagname'), text nodes - document.createTextNode('text')</li>
+              <li>element.appendChild(element), element.insertBefore(elementToAdd, elementBefore),</li>
+              <li>element.textContent = 'text' (instead of creating and adding text nodes</li>
+              <li>.removeChild(), replaceChild(new,old)</li>
+              <li>use .innerHTML to just overwrite the child elements. <strong>This will remove the old objects and create new ones!</strong> Also, scripts will not run if added this way</li>
+              <li><strong>Any CSS property names that are separated by dashes must be written in camelCase notation, so the dash is removed and the next letter is capitalized because dashes are not legal characters in property names <u>or use bracket notation</u>.</strong>        </li>
+          </ul>
+          <h3>Ch 7</h3>
+          <ul>
+            <li>element.addEventListener("event", callback); - <strong>Best Method</strong></li>
+            <li>inline: &lt;p onclick="console.log('You Clicked Me!')"&gt;Click Me&lt;/p&gt; <strong>- Inferior method</strong></li>
+            <li>element.event=callback is another way to do this</li>
+            <li>callbacks are passed event object</li>
+            <li>e.type - type of event, e.target - the object that triggered the event</li>
+            <li>screenX, screenY - coordinates of event relative to screen</li>
+            <li>clientX, clientY - coordinates relative to client (browser window for example)</li>
+            <li>pageX, pageY - coordinates relative to page</li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/Events">full list on the Events page of the Mozilla Developer Network.</a></li>
+            <li><strong>Touch Events</strong> Many modern devices now support touch events! (new to me)
+              <ul>
+                <li>touchstart event - fires whenever screen is touched - <strong>possibly preventing intended actions</strong></li>
+                <li>touchend - when when user stops touching</li>
+                <li>click event is often a much safer option as it still fires when the screen is touched</li>
+                <li>touchmove - user has touched the screen then moves around without leaving, continues even after the original element is not touched. <em>I can see using this for drag and drop, etc</em></li>
+                <li>touchenter event occurs when a user has already started touching the surface, but then passes over the element to which the event listener is attached.</li>
+                <li>touch event objects have a property called touches, touches.length specifies number of touch points</li>
+                <li>Each touch object has a number of properties, many similar to the event object, such as touch.screenX and touch.screenY to find the coordinates of the touch point. They have other properties such as touch.radiusX and touch.radiusY , which give an indication of the area covered by the touch, and touch.force , which returns the amount of pressure being applied by the touch as a value between 0 and 1 . Each touch object has a touch.identifier property, a unique ID that can be used to ensure you are dealing with the same touch.</li>
+              </ul>
+            </li>
+            <li>removeEventListener('event', callback) - note that callback name is necessary for removing - <strong>issue for anonymous functions</strong></li>
+            <li><strong>event.preventDefault()</strong> is used for preventing default behavior after event function code - eg form submit button</li>
+            <li>event propagation - bubbling vs capturing
+              <ul>
+                <li>bubbling triggers callback on child first then to parent,  to parent etc. <strong>is default</strong>                </li>
+                <li>capturing propagates from parent to child instead (use third parameter (true) in addEventListener)</li>
+                <li><strong>event.stopPropagation() in the callback stops the propagation, but does not prevent default behavior</strong></li>
+                <li>Event Delegation - attach the event listener to the parent  element, then use the target property to identify the element that was clicked on - <strong><em>will this work on other types of events such as onchange?</em></strong><em></em></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+    </main>
+</body>
+
+</html>
