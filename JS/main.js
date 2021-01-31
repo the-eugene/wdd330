@@ -2,7 +2,8 @@ function init(){
 const links = [
     {label: "Week1 Notes", url: "week1/index.html"},
     {label: "Week2 Notes", url: "week2/index.html"},
-    {label: "Week3 Notes", url: "week3/index.html"}
+    {label: "Week3 Notes", url: "week3/index.html"},
+    {label: "Week3 Notes", url: "week4/index.html"}
   ];
 
 var contents=document.getElementById("Contents");

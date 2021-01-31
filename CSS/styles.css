@@ -35,32 +35,14 @@ main {
   padding: 10px;
   border-radius: 5px;
   box-shadow: 5px 5px 10px #ce7e46;
-
   display: grid;
-  grid-template-areas:
-    "items form";
-  grid-gap: 0;
+  gap: 0;
   grid-template-columns: 1fr 1fr;
 }
 
 form {
   display: contents;
 }
-
-#Items {
-  grid-area: items;
-}
-
-#PaymentForm {
-  grid-area: form;
-}
-
-#Items {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  align-items: start;
-}
-
 
 .container img {
   display: block;
@@ -95,9 +77,6 @@ input {
   font-size: 12pt;
 }
 
-#total { background: none; border: none; width: 75px;}
-#address {width: 100%;}
-
 input[type=submit]{
   padding: 10px;
   margin: 10px;
@@ -128,17 +107,16 @@ table td:first-child,table th:first-child { border-left: none; }
 
 th{background-color: #fdccb6;}
 
-#TheForm input:valid {
-  border: 1px solid green;
-  background: #d0ffd0;
-}
-
 h2,h3 {margin:5px auto 1px auto;}
 h2 {
   font-size: larger;
   text-align: center;
   }
 h3 {font-size: medium;}
+
+.fullrow {
+  grid-column: 1/-1;
+}
 
 @media screen and (max-width: 1300px) {
   main {
@@ -149,12 +127,7 @@ h3 {font-size: medium;}
 @media screen and (max-width: 800px) {
   main {
     grid-template-columns: 1fr;
-    grid-template-areas: "items""form";
     margin: 0;
-  }
-
-  #Items {
-    grid-template-columns: 1fr 1fr;
   }
 }
 

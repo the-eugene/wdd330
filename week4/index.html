@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WDD 330 Week 4 Notes</title>
+    <link rel="stylesheet" href="../CSS/styles.css" />
+    <script src="../JS/main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>WDD 330 Week 4 Reading Notes</h1>
+    </header>
+    <main>
+        <div class="container fullrow">
+          <h3>Ch 8</h3>
+            <ul>
+              <li>document.forms - html collection with all the forms in document</li>
+              <li>document.forms.form_name accesses form with name form_name</li>
+              <li>document.forms['form_name'] is another way (better in my opinion)</li>
+              <li>form.elements - collection of form elements in the form</li>
+              <li>form.element_name or form['element_name'] </li>
+              <li><strong>note: these use name attribute NOT id</strong></li>
+              <li>form.reset() resets the form to initial state (input type=&quot;rese&quot; button does the same)</li>
+              <li>focus event is triggered when form element gains focus</li>
+              <li>blur event is triggered when form element loses focus</li>
+              <li>change event is triggered when a form element value has been changed AND committed (e.g losing focus)</li>
+              <li>input event fires when the value has changed (<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event">input_event</a>)</li>
+              <li>event.preventDefault() prevents default behavior (such as submitting a form when submit button is clicked)</li>
+              <li>placeholder HTML attribute allows for creating hint text inside inputs</li>
+              <li><em>autofocus attribute give focus to this element when a page loads</em></li>
+              <li><a href="https://www.sitepoint.com/html5-forms-markup/">new input types for HTML5</a></li>
+              <li>using same name on multiple elements such as checkboxes creates a collection</li>
+              <li>collection of radiobuttons also has a value property that is the value of the checked radio button</li>
+              <li><a href="https://www.sitepoint.com/html5-forms-javascript-constraint-validation-api/">more info on validation</a> (a little dated)</li>
+              <li><strong>(not in this book) pattern attribute allows using a regex match to validate input</strong></li>
+          </ul>
+          
+      </div>
+        <div  class="container">
+          <h3>Ch 12</h3>
+          <ul>
+              <li>using constructors instead of literals: const Obj=function(param){this.something=param; this.method=function(){...}}; anobj=new Obj(param);</li>
+              <li>no arguments needed? Can use new Obj; (no parentheses)</li>
+              <li><strong>new Array(arg1) makes array with length arg1 vs new Array(arg1,arg2,...) makes Array with arg1, arg2,... elements</strong></li>
+              <li><strong>class syntax(ES6):</strong> class Obj{constructor(param){this.something=param;} method(){...}}</li>
+              <li>.constructor property returns constructor function</li>
+              <li>use static keyword to create static method</li>
+              <li><strong>Prototypal Inhertitance</strong>
+                <ul>
+                  <li><strong>prototype property of Class name returns the prototype object for a class that can be modified. </strong></li>
+                  <li><strong>properties added to prototype are shared between all instances</strong></li>
+                  <li>own properties are added directly to the object (and will override prototype properties)</li>
+                  <li>anobj.constructor.prototype or Object.getPrototypeOf(anobj) or anobj.__proto__ will get the prototype - last one not recommended</li>
+                  <li>aprototype.isPrototypeOf(anobj) - true if prototype of object</li>
+                  <li>use local variables in class definitions to create private class members</li>
+                </ul>
+              </li>
+              <li>extending classes: class Obj2 extends Obj1 { contructor(){super(); ...}} etc</li>
+              <li>Properties of objects in JavaScript are said to be<em> enumerable</em> or <em>non-enumerable</em>              </li>
+              <li>can use <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">defineProperty</a> to define or alter the definition of properties</li>
+            <li>using property descriptors</li>
+              <ul>
+                <li>using <em>value</em><br>
+                  { <br>
+                  value: 'DAZ', //set value, just like assignment operator<br>
+                  writable: true, //can property value be changed, false by default<br>
+                  enumerable: true, //enumerate in for loops, etc.<br>
+                  configurable: true //can the property be changed<br>
+                } </li>
+                <li>using getters and setters <strong>instead of value</strong><br>
+                  {
+                    <br>
+                    get() {...retrieve a value...},<br>
+set(value) {...set values as necessary...; return value;}<br>
+                }</li>
+                <li>getter and setter property descriptor method is transparent in other code - still uses assignment operator and property name<br>
+                </li>
+              </ul>
+            <li>Object Based Inheritance
+              <ul>
+                <li>can use an object as prototype - const obj2=Object.create(obj); where obj is an object that will be prototype</li>
+                <li>can then add own properties individually</li>
+                <li>or const obj2 = Object.create(obj1, { ownproperty: { value: 'something', enumerable: true }, ownproperty2: { value: somethingelse, enumerable: true }, ... etc.});</li>
+                <li>can use an init function to set own properties - init should finish with return this; and include setting init=undefined, so that the function cannot be called again</li>
+                <li><strong>instanceOf operator does not work here</strong></li>
+              </ul>
+            </li>
+            <li>Mixins
+              <ul>
+                <li>copy properties from one or more objects to another</li>
+                <li>use Object.assign(obj_to_copy_to, obj1, obj2, ...);</li>
+                <li><strong>note: any object valued properties are copied by reference!</strong></li>
+                <li>Making a deep copy:<br>
+                  <code>function mixin(target,...objects) {<br>
+                </code><code>for (const object of objects) {        <br>
+                if(typeof object === 'object') {<br>
+for (const key of Object.keys(object)) {             <br>
+if (typeof object[key] === 'object') {             <br>
+target[key] = Array.isArray(object[key]) ? [] : {};             <br>
+mixin(target[key],object[key]);<br>
+} else {             <br>
+Object.assign(target,object);               <br>
+}         }         }     }     <br>
+return target; }</code></li>
+                <li>can use mixin function to create copy function<br>
+                  <code>function copy(target) {     const object =  Object.create(Object.getPrototypeOf(target));     mixin(object,target);     return object; }</code>                  <br>
+                </li>
+                <li>can use copy function to create factory</li>
+              </ul>
+            </li>
+            <li> if a method lacks a meaningful return value, it might as well return this so that chaining is possible.</li>
+            <li>somefunction.bind(this) will bind the currently scoped this to the this inside the function.</li>
+            <li>Use for-of Instead Of forEach() (for this to remain in scope)</li>
+            <li>Use arrow function (for this to remain in scope)</li>
+          </ul>
+        </div>
+		<div class="container">
+			<h3>Ch 15</h3>
+            <ul>
+              <li>jQuery is the most popular of all the JavaScript libraries used today. jQuery is a very powerful and polished library that provides a considerable number of useful methods. It has become so popular that many online tutorials assume you&rsquo;re using jQuery rather than just JavaScript. The jQuery library uses the $ symbol as a convenient alias for the the global jQuery object</li>
+              <li><a href="http://underscorejs.org/" target="_blank" font-size="2,2,3,3" color="link">Underscore </a>and<a href="https://lodash.com/" target="_blank" font-size="2,2,3,3" color="link"> Lodash</a>are very similar libraries of functions that provide additional functionality to the language. They both provide a large number of utility functions under the namespace _ (this is where they get their name from as the _ character is often referred to as an 'underscore' or a 'lodash'). A number of JavaScript libraries list one of these as a core dependency.</li>
+              <li>A big advantage of utilizing a popular library is that it will be used by lots of people and thoroughly tested. It will most likely have been optimized and battle-tested for nearly every eventuality. Using a library means you can be confident that your code will be as bullet-proof as possible in many browsers.</li>
+              <li>You need to include the code for the library as well as your own code. This increases the amount of code that needs to be downloaded by a website, which in some cases can cause performance issues.</li>
+              <li>Using a library can also make your code slower than using plain vanilla JavaScript.</li>
+              <li> consider that the popularity of a particular library can be 'here today, gone tomorrow'.</li>
+              <li>A module is a self-contained piece of code that provides functions and methods that can then be used in other files and by other modules. 
+                <ul>
+                  <li>All code in modules is always in strict mode without the need for 'use strict' and there is no way to opt out of this.</li>
+                  <li>A module has its own global scope, so any variables created in the top-level of a module can only be accessed within that module.</li>
+                  <li>The value of this in the top level of a module is undefined , rather than the global object.</li>
+                  <li>You can't use HTML-style comments in modules</li>
+                  <li><strong>export const PI = 3.1415926; import { PI } from './pi.js';</strong></li>
+                  <li>export {     variance,     mean } //exporting functions</li>
+                  <li>import  { mean, variance } from './stats.js';</li>
+                  <li>using export default allows dropping the curly braces and using aliases. Do not use more than one export default.</li>
+                  <li><strong><em>Are modules supported in browsers? Is node.js supporting this syntax?</em></strong></li>
+                </ul>
+              </li>
+              <li>MVC Frameworks</li>
+              <ul>
+                <li>Sometimes controller code is mixed into the views, and sometimes other patterns are used, such as Model-View-Presenter (MVP), Model-View-ViewModel (MVVM), and AngularJS</li>
+                <li font-size="2,2,3,3"><a href="http://aurelia.io/" target="_blank" font-size="2,2,3,3" color="link">Aurelia</a> is a modern framework that uses ES6, and focuses on letting you write dynamic web applications while keeping the implementation details in the background.                </li>
+                <li font-size="2,2,3,3"><a href="https://angular.io/" target="_blank" font-size="2,2,3,3" color="link">Angular</a> is a powerful framework by Google to make creating dynamic web applications easier. This is done by extending the HTML language using custom ng- attributes.                </li>
+                <li font-size="2,2,3,3"><a href="http://emberjs.com/" target="_blank" font-size="2,2,3,3" color="link">Ember </a>is a framework designed to make building large web applications easier. It does this by using common conventions that avoid the need for lots of set-up code, though it can become more difficult if you don&rsquo;t follow these conventions.</li>
+              </ul>
+              <li>Templating Languages</li>
+              <li>There are a number of popular templating languages to choose from: Handlebars, Pug, EJS, Mustache, Nunjucks
+              </li>
+              <li>                View Libraries: <a href="https://facebook.github.io/react/" target="_blank" font-size="2,2,3,3" color="link">React</a>, <a href="https://vuejs.org/" target="_blank" font-size="2,2,3,3" color="link">Vue.js</a>, <a href="https://svelte.technology/" target="_blank" font-size="2,2,3,3" color="link">Svelte</a>, <a href="https://www.infernojs.org/" target="_blank" font-size="2,2,3,3" color="link">Inferno</a>, <a href="https://github.com/anthonyshort/deku" target="_blank" font-size="2,2,3,3" color="link">Deku</a>, <a href="http://developit.github.io/preact/" target="_blank" font-size="2,2,3,3" color="link">Preact</a>, <a href="https://github.com/Matt-Esch/virtual-dom" target="_blank" font-size="2,2,3,3" color="link">Virtual-DOM</a>, <a href="http://moonjs.ga/" target="_blank" font-size="2,2,3,3" color="link">Moon</a>
+              </li>
+              <li><strong>Content delivery networks</strong>(CDNs) are systems of distributed servers that can deliver web resources, such as JavaScript, CSS or image files to a user based on their geographic location.</li>
+              <li>minify javascript files and bundle them together to reduce the overhead (multiple requests, etc)</li>
+              <li><a href="https://babeljs.io/" target="_blank" font-size="2,2,3,3" color="link">Babel</a> is the most popular transpiler for converting the most up-to-date version of ECMAScript into an older flavor of JavaScript.</li>
+              <li>Alternative languages: <a href="http://coffeescript.org/" target="_blank" font-size="2,2,3,3" color="link">CoffeeScript</a>, <a target="_blank" font-size="2,2,3,3" color="link">TypeScript</a>, <a target="_blank" font-size="2,2,3,3" color="link">Dart</a></li>
+              <li>Minify
+                <ul>
+                  <li font-size="2,2,3,3"><a href="https://www.npmjs.org/package/yui" target="_blank" font-size="2,2,3,3" color="link">UI Compressor</a>                  </li>
+                  <li font-size="2,2,3,3"><a href="https://developers.google.com/closure/compiler/" target="_blank" font-size="2,2,3,3" color="link">Google&rsquo;s Closure</a>                  </li>
+                  <li font-size="2,2,3,3"><a href="https://github.com/mishoo/UglifyJS" target="_blank" font-size="2,2,3,3" color="link">UglifyJS</a></li>
+                </ul>
+              </li>
+              <li> Webpack is a module bundler,  uses the concept of 'loaders', which allows you to perform tasks such as: Transpiling, Minifying, Linting, Testing, Compiling CSS preprocessor files</li>
+            </ul></div>
+    </main>
+</body>
+
+</html>
