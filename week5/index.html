@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WDD 330 Week 5 Notes</title>
+    <link rel="stylesheet" href="../CSS/styles.css" />
+    <script src="../JS/main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>WDD 330 Week 5 Reading Notes</h1>
+    </header>
+    <main>
+        <div class="container fullrow">
+          <h3>Ch 10</h3>
+            <ul>
+              <li>Types of errors
+                <ul>
+                  <li>System error - something the program is interacting with, device, or other system software generates an error</li>
+                  <li>Programmer error - issue is with the directly in the programmers code</li>
+                  <li>User error - program is unable to correctly handle the user interaction - probably because the user did something unexpected</li>
+                </ul>
+              </li>
+              <li>Exception is an error with a return value</li>
+              <li>Stack trace - sequence of function calls (stack) that informs about exactly where the issue occured</li>
+              <li>Warnings - &quot;<em>A warning can occur if there&rsquo;s an error in the code that isn't enough to cause the program to crash</em>&quot; Its an informational statement that the programmer may want to be aware of, but may have also done intentionally.</li>
+              <li>Strict mode
+                <ul>
+                  <li>'use strict'; on first line of a javascript file (will enable strict mode globally</li>
+                  <li>better per function:<br>
+function func(){<br>
+                  'use strict';<br>
+                  ...}</li>
+                  <li>best - self invoking function:<br>
+                  (function() {     'use strict';     // All your code would go inside this function }());                  </li>
+                  <li>modules are strict by default</li>
+                </ul>
+              </li>
+              <li>Linting - helps highlight issues and bad practices
+                <ul>
+                  <li><a href="http://jslint.com/" target="_blank" color="link">JS Lint</a></li>
+                  <li><a href="http://jshint.com/" target="_blank" color="link">JS Hint</a></li>
+                  <li><a href="http://eslint.org/" target="_blank" color="link">ES Lint</a></li>
+                </ul>
+              </li>
+              <li>Feature detection - browser support for features is behind the specifications, and users may not use the latest browsers anyway
+                <ul>
+                  <li>Check if the appropriate object exists and fail gracefully</li>
+                  <li><a href="https://modernizr.com/docs" target="_blank" color="link">Modernizr</a> is a library that offers an easy way to implement feature detection</li>
+                  <li><a href="http://caniuse.com/" target="_blank" color="link">Can I Use?</a></li>
+                  <li>do not use browser sniffing (using user agent string)</li>
+                </ul>
+              </li>
+              <li>Debugging
+                <ul>
+                  <li>Alert box</li>
+                  <li>Console</li>
+                  <li><strong>debugger keyword</strong> - This will create a breakpoint in your code that will pause the execution of the code</li>
+                </ul>
+              </li>
+              <li>Error objects - new Error(&quot;Error Message&quot;);
+                <ul>
+                  <li>EvalError is not used in the current ECMAScript specification and only retained for backwards compatibility. It was used to identify errors when using the global eval() function.                  </li>
+                  <li>RangeError is thrown when a number is outside an allowable range of values.                  </li>
+                  <li>ReferenceError is thrown when a reference is made to an item that doesn&rsquo;t exist. For example, calling a function that hasn't been defined.                  </li>
+                  <li>SyntaxError is thrown when there&rsquo;s an error in the code&rsquo;s syntax.                  </li>
+                  <li>TypeError is thrown when there&rsquo;s an error in the type of value used; for example, a string is used when a number is expected.                  </li>
+                  <li>URIError is thrown when there&rsquo;s a problem encoding or decoding the URI.                  </li>
+                  <li>InternalError is a non-standard error that is thrown when an error occurs in the JavaScript engine.</li>
+                </ul>
+              </li>
+              <li>Throwing Exceptions<br>
+              try {
+              ...code throwing exception...} catch(error) {code dealing with exception           } finally {         code always executed   }                </li>
+              <li>Test-Driven Development
+                <ol>
+                  <li>Write tests (that initially fail)                  </li>
+                  <li>Write code to pass the tests                  </li>
+                  <li>Refactor the code                  </li>
+                  <li>Test refactored code                  </li>
+                  <li>Write more tests for new features</li>
+                </ol>
+              </li>
+              <li>Testing Frameworks
+                <ul>
+                  <li><a href="https://facebook.github.io/jest/" target="_blank" color="link">Jest</a> is a TDD framework, created by Facebook </li>
+                  <li><em>jest -c {}</em> runs
+              all files ending with .test.js in the folder              </li>
+                  <li>test(&quot;what is tested&quot;, ()=&gt;{code and expectations}) </li>
+                  <li>expect(expression) creates expectation object</li>
+                  <li>expect(expression).toBe(expectedResult) - expectation and a matcher</li>
+                  <li>toBe, toEqual, etc. <a href="http://facebook.github.io/jest/docs/expect.html" target="_blank" color="link">Jest's matcher methods</a></li>
+                </ul>
+              </li>
+          </ul>
+      </div>
+    </main>
+</body>
+
+</html>
