@@ -1,0 +1,89 @@
+:root{
+    --border-inactive: #b24f18ba;
+    --border-active: #FF5722;
+    --button-color:rgb(59 21 5 / 20%);
+    --diminished-color: rgb(59 21 5 / 40%);
+    --button-font-color: #311404;
+}
+
+.hide{display: none !important;}
+
+div.toDoList{
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font: 18px'Open Sans', sans-serif;    
+}
+
+.toDoHeader{
+    text-align: center;
+}
+
+.toDoBody{flex-grow: 3;}
+.toDoBody .box {border: 1px solid var(--border-inactive);}
+.toDoBody .box .listitem:nth-child(2n){background: #e15c1229;}
+
+.listitem{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding: 2px 0;
+}
+
+.listitem .button{
+    width: 30px;
+    min-width:30px;
+    height: 30px;
+}
+
+div.filter,div.toDoFooter{
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    font: 15px 'Open Sans', sans-serif;
+    font-weight: bold;
+    padding: 5px 0;
+}
+.message{
+    padding: 2px;
+    width: 100%;
+}
+
+div.toDoFooter input{
+    width: 100%;
+    font-size: 22px;
+}
+
+.button {
+    padding: 6px;
+    background: var(--button-color);
+    border: 1px solid var(--border-inactive);
+    border-radius: 5px;
+    margin: 0 2px;
+    color: var(--button-font-color);
+}
+
+.button.delete {
+    border: none;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm6 16.094l-4.157-4.104 4.1-4.141-1.849-1.849-4.105 4.159-4.156-4.102-1.833 1.834 4.161 4.12-4.104 4.157 1.834 1.832 4.118-4.159 4.143 4.102 1.848-1.849z" fill="red"/></svg>') center center no-repeat;
+}
+
+.button.on{
+    border-color: var(--border-active);
+    border-width: 2px;
+}
+
+.listitem.on .button.toggle{
+    background: var(--button-color) url('data:image/svg+xml;utf8,<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill="%23b24f18ba"><path d="M12 11.293l10.293-10.293.707.707-10.293 10.293 10.293 10.293-.707.707-10.293-10.293-10.293 10.293-.707-.707 10.293-10.293-10.293-10.293.707-.707 10.293 10.293z"/></svg>') no-repeat center center;
+    background-size: 50px;
+    border-width: 2px;
+}
+.listitem.on .message{
+    text-decoration: line-through;
+    color: var(--diminished-color);
+    }
+
+@media screen and (max-width: 380px) {
+    div.filter {flex-flow: row wrap;}
+}

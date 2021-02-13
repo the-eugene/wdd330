@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Grandstander:wght@500&family=Roboto&display=swap');
+
+html {
+    margin: 0;
+    padding: 0;
+}
+
+* {box-sizing: border-box;}
+
+body {
+margin: 0;
+padding: 0;
+background-image: radial-gradient( circle farthest-corner at 30% 25%,  rgba(255,37,174,1) 0%, rgba(241,147,55,1) 53.4%, rgba(250,237,56,1) 99.5% );
+background-repeat: no-repeat;
+background-attachment: fixed;
+font-family: 'Roboto', sans-serif;
+background-size: 800% 800%;
+
+-webkit-animation: AnimationName 31s ease infinite;
+-moz-animation: AnimationName 31s ease infinite;
+animation: AnimationName 31s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+0%{background-position:52% 0%}
+50%{background-position:49% 100%}
+100%{background-position:52% 0%}
+}
+@-moz-keyframes AnimationName {
+0%{background-position:52% 0%}
+50%{background-position:49% 100%}
+100%{background-position:52% 0%}
+}
+@keyframes AnimationName {
+0%{background-position:52% 0%}
+50%{background-position:49% 100%}
+100%{background-position:52% 0%}
+}
+
+header {
+    padding: 5vh;
+    text-align: center;
+    }
+
+h1 {font-family: 'Grandstander', cursive;}
+
+main {
+    max-width: 800px;
+    margin:auto;
+    background: #fffc;
+    padding: 5vh;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px #ce7e46;
+}
+
+input, label, select{
+  display: inline-block;
+  font-size: 20px;}
+
+fieldset {margin: 10px;}
+form div{
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 2fr 1fr;
+  margin: 10px auto;
+  }
+#clear,#calculate {padding: 10px;}
+
+input:invalid {
+  border: 1px solid red;
+  background: #ffd0d0;
+}
+
+table {
+  width: 100%;
+  border: 1px solid #846c8f;
+  border-spacing: 0;
+}
+
+td, th {
+  padding: 5px;
+  border-collapse: collapse;
+  border-left: 1px dashed #846c8f;
+ }
+
+table td:first-child,table th:first-child { border-left: none; }
+
+th{background-color: #fdccb6;}
+
+tr:nth-child(odd) td {background-color: #fddfd1;}
+
+@media screen and (max-width: 700px) {
+    form div{ grid-template-columns: 1fr;}
+    main {padding: 3px;}
+}
+
+
+
+div.button {
+    display: inline-block;
+    padding: 10px;
+    background: rgb(185, 185, 247);
+}
+
+.button.on{
+    border: 2px solid black;
+}
+
+.listitem.on{background: red;}
