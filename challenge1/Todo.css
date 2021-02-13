@@ -41,7 +41,7 @@ div.filter,div.toDoFooter{
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    font: 15px 'Open Sans', sans-serif;
+    font: 14px 'Open Sans', sans-serif;
     font-weight: bold;
     padding: 5px 0;
 }
