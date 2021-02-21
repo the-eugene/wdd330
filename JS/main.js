@@ -8,10 +8,22 @@ const links = [
     {label: "Week6 - Challenge 1", url: "challenge1/index.html"},
   ];
 
+  const links2 = [
+    {label: "Week7 Notes", url: "week7/index.html"},
+  ];
+
+
 var contents=document.getElementById("Contents");
+var contents2=document.getElementById("Contents2");
+
 for (const link of links) {
     var row=document.createElement("li");
     row.innerHTML=`<a href="${link.url}">${link.label}</a>`;
     contents.appendChild(row);
+}
+for (const link of links2) {
+  var row=document.createElement("li");
+  row.innerHTML=`<a href="${link.url}">${link.label}</a>`;
+  contents2.appendChild(row);
 }
 }

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WDD 330 Week 7 Notes</title>
+    <link rel="stylesheet" href="../CSS/styles.css" />
+    <script src="../JS/main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>WDD 330 Week 7 Reading Notes</h1>
+    </header>
+    <main>
+        <div class="container">
+          <h3>Ch 11</h3>
+          <ul>
+              <li><strong>Functions are objects</strong></li>
+              <li>Length property gets number of arguments</li>
+              <li>Can add own properties - for example, use arguments as keys to an array to cache results (memoization)</li>
+              <li>function.call(object, arg1,...) calls function with object set as this keyword and arguments after</li>
+              <li>function.apply(object, arg) same as above except arg is an array of arguments.</li>
+              <li>Immediately Invoked Function Expression
+                <ul>
+                  <li>Use to limit variable scope for temp variables (in ES6 just use a code block)</li>
+                  <li>Use to set strict on just your code</li>
+                </ul>
+              </li>
+              <li>Self defining functions - just assign the name of the function to a different function expression (it will lose its custom properties)</li>
+              <li>Init-time branching - creating functions at initialization - can be used to avoid checking features every time a function executes.</li>
+              <li>recursive functions call themselves <strong>- what is the limit for recursion in JS?</strong></li>
+              <li>Event-driven Asynchronous Programming - respond to events with callbacks</li>
+              <li>setTimeout(callback, ms) fires an event after a timeout.</li>
+            <li><strong>promise waits for a result of an async operation then is either resolved or rejected</strong> <a href="https://web.dev/promises/">web.dev/promises/</a><br>
+                <ul>
+                  <li>Setup
+                    <pre>var promise = new Promise(function(resolve, reject) {<br>  // do a thing, possibly async, then…<br>  if (/* everything turned out fine */) {<br>    resolve("Stuff worked!");<br>  }<br>  else {<br>    reject(Error("It broke"));<br>  }<br>});
+</pre>
+                  </li>
+                  <li>Using
+                    <pre>promise.then(function(result) {<br>  console.log(result); // "Stuff worked!"<br>}, function(err) {<br>  console.log(err); // Error: "It broke"<br>});
+
+</pre>
+                  </li>
+                </ul>
+            </li>
+              <li>Promises can be chained by adding more then calls</li>
+              <li>async functions (ES2017)
+                <ul>
+                  <li>definitions are preceded by the async keyword </li>
+                  <li>calls use await keyword, and will not execute next line until the call is complete                  </li>
+                </ul>
+              </li>
+              <li>Closures - functions can return functions. These return functions maintain access to the scope of the outer function</li>
+              <li>Generator (ES6) defined with function*. Calling this function returns a Generator object that will actually run the code inside. 
+                <ul>
+                  <li>The &quot;return&quot; is instead yield, which returns the value and pauses the code. Next time a next() is called the code resumes until yield is reached again.</li>
+                  <li>it can also be used on for...of loop</li>
+                </ul>
+              </li>
+              <li>A pure function is a function that adheres to the following rules: 1) The return value of a pure function should only depend on the values provided as arguments. It doesn't rely on values from somewhere else in the program. 2) There are no side-effects. A pure function doesn't change any values or data elsewhere in the program. It only makes non-destructive data transformations and returns new values, rather than altering any of the underlying data. 3) Referential transparency. Given the same arguments, a pure function will always return the same result.</li>
+              <li>Higher-order functions are functions that accept another function as an argument, or return another function as a result, or both.</li>
+              <li>A function is said to be curried when not all arguments have been supplied to the function, so it returns another function that retains the arguments already provided, and expects the remaining arguments that were omitted when the original function was called. A final result is only returned once all the expected arguments have eventually been provided.</li>
+          </ul>
+      </div>
+      <div class="container">
+        <h3>Ch 13</h3>
+        <ul>
+          <li>The same-origin policy in browsers blocks all requests from a domain that is different from the page making the request. </li>
+          <li><a href="http://en.wikipedia.org/wiki/Cross-origin_resource_sharing" target="_blank"   color="link">Cross-origin resource sharing (CORS)</a>is a solution to this problem as it allows resources to be requested from another website outside the original domain. </li>
+          <li>Fetch API - the most modern way to do AJAX</li>
+          <li>fetch('https://example.com/data') .then( // code that handles the response ) .catch( // code that runs if the server returns an error )</li>
+          <li>Response Interface
+            <ul>
+              <li>ok property that checks to see if the response is successful - based on the <a href="http://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank"   color="link">HTTP status code</a> (true 200-299)</li>
+              <li>status property (status code) (should manually check this)</li>
+              <li> the promise will only be rejected in the case of a network error, rather than something like a '404 page not found error', which is still considered a successful request in terms of the promise.</li>
+              <li>headers – A Headers object (see later section) containing any headers associated with the response</li>
+              <li>url – A string containing the URL of response  </li>
+              <li>redirected – A boolean value that specifies if the response is the result of a redirect  </li>
+              <li>type – A string value of 'basic', 'cors', 'error' or 'opaque'.</li>
+              <li>redirect() method can be used to redirect to another URL (Not supported?)</li>
+              <li>text() method takes a stream of text from the response, reads it to completion and then returns a promise that resolves to a USVSting object that can be treated as a string in JavaScript.</li>
+              <li>blob() method is used to read a file of raw data</li>
+              <li>json() method transforms a stream of JSON data into a promise that resolves to a JavaScript object</li>
+            </ul>
+          </li>
+          <li>Request Interface
+            <ul>
+              <li>url – The URL of the requested resource (the only property that is required).</li>
+              <li> method – a string that specifies which HTTP method should be used for the request. By default, this is 'GET'.</li>
+              <li> headers – This is a Headers object (see later section) that provides details of the request's headers.</li>
+              <li> mode – Allows you to specify if CORS is used or not. CORS is enabled by default.</li>
+              <li> cache – Allows you to specify how the request will use the browser's cache. For example, you can force it to request a resource and update the cache with the result, or you can force it to only look in the cache for the resource.</li>
+              <li> credentials – Lets you specify if cookies should be allowed with the request.</li>
+              <li> redirect – Specifies what to do if the response returns a redirect.</li>
+            </ul>
+          </li>
+          <li>Headers Interface
+            <ul>
+              <li>example: const headers = new Headers({ 'Content-Type': 'text/plain', 'Accept-Charset' : 'utf-8', 'Accept-Encoding':'gzip,deflate' })</li>
+              <li>has(), get(), set(), append(), delete()</li>
+              <li></li>
+            </ul>
+          </li>
+        </ul>
+        </div>
+    </main>
+</body>
+
+</html>
