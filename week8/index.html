@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WDD 330 Week 8 Notes</title>
+    <link rel="stylesheet" href="../CSS/styles.css" />
+    <script src="../JS/main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>WDD 330 Week 8 Reading Notes</h1>
+    </header>
+    <main>
+        <div class="container fullrow">
+          <h3>HTML 5 &amp; CSS3: Ch 8</h3>
+          <ul>
+            <li>CSS Transforms
+              <ul>
+                <li>transform the element without reflowing the document</li>
+                <li>default origin is element center, but can be set with transform-origin property</li>
+                <li>order of transform functions matters - the coordinate system gets transformed along with the element.</li>
+                <li>format is transform: func() func() ...;</li>
+                <li>translate(x,y) move element</li>
+                <li>scale(x,y) scales (ommiting the second argument causes uniform scaling</li>
+                <li>rotate(a) rotates the element</li>
+                <li>skew(x,y) skews the element on each axis separatey (x axis one arg.)</li>
+              </ul>
+            </li>
+            <li>CSS Transitions
+              <ul>
+                <li>creates an animated transition between two states of an element - for example normal and :hover</li>
+                <li>transition-property: transform; defines which property will be animated</li>
+                <li> transition-duration: 0.2s; defines the time for the animation</li>
+                <li> transition-timing-function: ease-out; defines the curve for the speed of change</li>
+                <li> transition-delay: 50ms; create a delay before animation begins</li>
+                <li>multiple transitions can be applied using comma separated lists</li>
+                <li>transition: transform 0.2s ease-out 50ms, color 0.1s linear 50ms; shorthand property (this one sets 2 different transitions)</li>
+              </ul>
+            </li>
+            <li>CSS Animations
+              <ul>
+                <li>creates keyframe states for an element and then transitions between them creating an animation</li>
+                <li>@keyframes SomeAnimation{} creates and names a set of keyframes</li>
+                <li>inside are rules - xx%{property: value;} etc.</li>
+                <li>animation-name: appearDisappear; Which keyframes to use for animation</li>
+                <li> animation-duration: 300ms; total time the animation will take</li>
+                <li> animation-timing-function: ease-in; timing function</li>
+                <li> animation-iteration-count: 1; number of times to repeat the animation</li>
+                <li> animation-direction: alternate; the direction in which to play animation (forward, backward, etc)</li>
+                <li> animation-delay: 5s; delay before playing the animation</li>
+                <li> animation-fill-mode: backwards; the state in which the element starts and ends the animation</li>
+                <li> animation-play-state: running; is the animation actively running.</li>
+                <li>Shorthand   -  animation: 300ms ease-in alternate 5s backwards appearDisappear; }</li>
+                <li></li>
+              </ul>
+            </li>
+          </ul>
+      </div>
+      <div class="container fullrow">
+        <h3>HTML 5 &amp; CSS3: Ch 12</h3>
+        <ul>
+          <li><strong>Canvas API</strong>
+<ul>
+          <li>Make sure to set width and height using the HTML tag not CSS (CSS will not alter the coordinate system, only scale the result)</li>
+          <li>get canvas using JS then get context e.g. canvas.getContext("2d");</li>
+          <li>fill and stroke: context.strokeStyle = &quot;red&quot;; context.fillStyle = &quot;blue&quot;;</li>
+          <li>context.fillRect(10, 10, 100, 100);    context.strokeRect(10, 10, 100, 100); //draw a rectangle with fill and stroke</li>
+          <li>fillStyle can use colors, gradients, or patterns (patterns use Image objects)</li>
+          <li>Paths:</li>
+          <li>arc(x, y, radius, startAngle, endAngle, anticlockwise)</li>
+          <li>context.beginPath(); begins a new path</li>
+          <li>context.closePath(); closes the path</li>
+          <li>canvas5.toDataURL("image/png") Save the image!</li>
+          <li>drawImage(image, x, y); </li>
+          <li>context.getImageData(x, y, x2, y2); gets values from a section of the canvas (limited by cross-origin)</li>
+          <li>context.putImageData(imageData, 0, 0) writes data to canvas</li>
+          <li>context.font = "18px LeagueGothic, Tahoma, Geneva, sans-serif"; set font</li>
+          <li>context.fillText(&quot;Text&quot;, x,  y); draw text</li>
+          </ul>
+          </li>
+          <li>SVG
+            <ul>
+              <li>Built using XML</li>
+              <li>&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewbox=&quot;x y x2 y2&quot;&gt;&lt;/svg&gt;</li>
+              <li>&lt;desc&gt;Description&lt;/desc&gt;</li>
+              <li>&lt;rect x=&quot;10&quot; y=&quot;10&quot; width=&quot;100&quot; height=&quot;100&quot;               fill=&quot;blue&quot; stroke=&quot;red&quot; stroke-width=&quot;3&quot;  /&gt; rectangle</li>
+              <li>&lt;path ... just use illustrator or inkscape to draw SVGs</li>
+              <li>Recommends Raphael - this is dated. D3.js seems to be the top framework these days.              </li>
+            </ul>
+          </li>
+          <li>Drag and Drop
+            <ul>
+              <li>set draggable to true</li>
+              <li>add event listener to dragstart, dragover, and drop</li>
+              <li>event.dataTransfer.setData("text/plain",data); use a DataTransferObject to transfer Data!</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </main>
+</body>
+
+</html>
