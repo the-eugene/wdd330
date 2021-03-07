@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WDD 330 Week 9 Notes</title>
+    <link rel="stylesheet" href="../CSS/styles.css" />
+    <script src="../JS/main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>WDD 330 Week 9 Reading Notes</h1>
+    </header>
+    <main>
+        <div class="container fullrow">
+          <h3>Ch 9 - Window Object</h3>
+          <ul>
+            <li>Browser Object Model
+              <ul>
+                <li>JS will always have a top level object</li>
+                <li>the exact object depends on environment - in Node it is &quot;global&quot; in a browser it is &quot;Window&quot;</li>
+                <li>global variables and functions are actually properties of this object</li>
+                <li>Note that variable vs window.variable differs in one respect - when not variable is not defined - using variable will produce an error but window.variable will be false (in an if statement condition)</li>
+              </ul>
+            </li>
+            <li>alert(), confirm(), prompt() are methods of window, used to show some simple dialog boxes            
+              <ul>
+                <li>these are blocking so anything else running will stop until the dialogs are dismissed</li>
+                <li>alert - display message and ok button</li>
+                <li>confirm - ok or cancel - returns true or false</li>
+                <li>prompt - prompts for a value</li>
+              </ul>
+            </li>
+            <li>window.navigator.userAgent - properties about the browser (not reliable)</li>
+            <li>window.location - the location of the current document
+              <ul>
+                <li>window.location.href - full url (setting it will send the browser to that locatiion)</li>
+                <li>window.location.protocol (http, etc.)</li>
+                <li>window.location.host - domain name/host AND port</li>
+                <li>window.location.hostname - domain name</li>
+                <li>window.location.port - port</li>
+                <li>window.location.pathname - path</li>
+                <li>window.location.search - get arguments ?q=shj;... etc.</li>
+              </ul>
+            </li>
+            <li>window.open - open a new window with a url, etc. e.g window.open('https://sitepoint.com',' SitePoint','width=400,height=400,resizable=yes');</li>
+            <li>moveTo(0,0); resizeTo(600,400) etc - obvious.</li>
+            <li>window.screen (.height, .width, etc.) .availHeight, availWidth (actual space in for the window), window.screen.colorDepth;</li>
+            <li><strong>use the screen object on mobile to manipulate screen orientation and so on. How?</strong></li>
+            <li>document.write() - write text to the page. writing after the load will replace the page. writing while page is loading just inserts the result into the html.</li>
+            <li>cookies
+              <ul>
+                <li>document.cookie = 'key=value'; - this APPENDS values, or changes them if they already exist, but does not delete other cookie values.</li>
+                <li>'name=Batman; max-age=86400' or 'name=Batman; expires=timeout' (in ms)</li>
+                <li>domain=someSite</li>
+                <li>path=/some/path/</li>
+                <li>secure - sets the cookie to only transfer over https</li>
+              </ul>
+            </li>
+            <li>setTimeout(callback, timeinms) runs a function after a set timeout</li>
+            <li>window.clearTimeout(integer) cancel a timeout - integer comes from setTimeout</li>
+            <li>setInterval() repeats the function over and over. window.clearInterval() cancels</li>
+            <li><strong>requestAnimationFrame</strong> new way of doing animations in JS. CSS is still better most of the time;</li>
+          </ul>
+      </div>
+      <div class="container fullrow">
+        <h3>Ch 14</h3>
+        <ul>
+          <li><strong>data-</strong> attribute can be used to add attributes to elements in html. </li>
+          <li>Javascript can access these using someelement.dataset property. data- is dropped from the property name</li>
+          <li>HTML5 Web Storage -similar to using cookies but has fewer restrictions, more storage capacity, and is generally easier to use.
+            <ul>
+              <li>uses localStorage</li>
+              <li>not sent to server with requests</li>
+              <li>much more storage</li>
+              <li>available in multiple windows (same domain)</li>
+              <li>does not expire like cookies</li>
+            </ul>
+          </li>
+          <li>addEventListener('storage', (event) =&gt; { console.log(`The ${event.key} was updated from ${event.oldValue} to ${event.newValue} and saved in  ${event.storageArea}`) }, false); - example - of monitoring localStorage using events</li>
+          <li>Geolocation : navigator.geolocation.getCurrentPosition(callback);
+            <ul>
+              <li font-size="2,2,3,3">osition.speed property returns the ground speed of the device in meters per second.              </li>
+              <li font-size="2,2,3,3">position.altitude property returns an estimate of the device&rsquo;s altitude in meters above the<a href="http://en.wikipedia.org/wiki/World_Geodetic_System" target="_blank" font-size="2,2,3,3" color="link">WGS84</a>ellipsoid, which is a standard measurement for the center of the Earth.              </li>
+              <li font-size="2,2,3,3">position.heading property returns the direction the device is moving in. This is measured as a bearing in degrees, clockwise from North.              </li>
+              <li font-size="2,2,3,3">position.timestamp property returns the time that the position information was recorded.              </li>
+              <li>navigator.geolocation.watchPosition(callback); can monitor as the position changes</li>
+              <li>navigator.geolocation.clearWatch(id); clears the monitoring</li>
+            </ul>
+          </li>
+          <li>Web Workers
+            <ul>
+              <li>const worker=new Worker('task.js'); runs the task.js file in the background</li>
+              <li>worker.postMessage('Hello'); sends a message to the worker from main script</li>
+              <li>self.postMessage('Finished'); sends a message from the worker</li>
+              <li>mesage event is fired when a message is posted. e.g.: worker.addEventListener('message', (event) =&gt; {     console.log(event.data); }, false); </li>
+              <li>end with worker.terminate(); from main script, or, self.close() from worker.</li>
+            </ul>
+          </li>
+          <li>Websockets
+            <ul>
+              <li>allows two way communication with server - push messages</li>
+              <li><a href="https://javascript.info/websocket">https://javascript.info/websocket</a></li>
+            </ul>
+          </li>
+          <li>Notifications
+            <ul>
+              <li>The Notification API allows you to show messages using the system's notifications. </li>
+              <li>if(window.Notification) {</li>
+              <li>Notification.requestPermission()     <br>
+              .then((permission) =&gt; {         <br>
+              if(Notification.permission === 'granted')<br>
+{         new Notification('Hello JavaScript!');         }     }); <br>
+}</li>
+              <li>The notification instance has a number of events that it can react to, including click (when a user clicks on it), show (when the notification appears) and close (when the notification is closed).</li>
+              <li><a href="https://www.javascripttutorial.net/web-apis/javascript-notification/">https://www.javascripttutorial.net/web-apis/javascript-notification/</a></li>
+            </ul>
+          </li>
+          <li>&lt;audio&gt; and &lt;video&gt; tags</li>
+          <li>Shims and polyfills have code that implements modern functionality in an older browser.</li>
+          <li>The main difference between them is that a shim is a piece of code that adds some missing functionality to a browser, although the implementation method may differ slightly from the standard API. A polyfill is a shim that achieves the same functionality, while also using the API commands that would be used if the feature was supported natively.</li>
+        </ul>
+      </div>
+    </main>
+</body>
+
+</html>
