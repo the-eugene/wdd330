@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WDD 330 Week 10 Notes</title>
+    <link rel="stylesheet" href="../CSS/styles.css" />
+    <script src="../JS/main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>WDD 330 Week 10 Reading Notes</h1>
+    </header>
+    <main>
+        <div class="container fullrow">
+          <h3>MDN: Client Side Form Validation</h3>
+          <ul>
+            <li>Validation on the client side ensures users enter the right data in the right format e.g. passwords</li>
+            <li><strong>protects from malicious data. NOT</strong>! Always validate and sanitize server side</li>
+            <li>input type specifies whether the field is expecting text, numbers, phone numbers, emails, etc.</li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/required">required</a>: Specifies whether a form field needs to be filled in before the form can be submitted.</li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/minlength">minlength</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/maxlength">maxlength</a>: Specifies the minimum and maximum length of textual data (strings)</li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/min">min</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/max">max</a>: Specifies the minimum and maximum values of numerical input types</li>
+            <li>type: Specifies whether the data needs to be a number, an email address, or some other specific preset type. </li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern">pattern</a>: Specifies a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">regular expression</a> that defines a pattern the entered data needs to follow.</li>
+            <li>:valid / :invalid css pseudo classes - allow styling for valid or invalid field elemenents</li>
+            <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Constraint_validation">Constraint Validation API</a>
+interfaces:              
+  <ul>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement">HTMLButtonElement</a> (represents a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/button">&lt;button&gt;</a> element)</li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFieldSetElement">HTMLFieldSetElement</a> (represents a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset">&lt;fieldset&gt;</a> element)</li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement">HTMLInputElement</a> (represents an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input">&lt;input&gt;</a> element)</li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLOutputElement">HTMLOutputElement</a> (represents an <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/output">&lt;output&gt;</a> element)</li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement">HTMLSelectElement</a> (represents a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select">&lt;select&gt;</a> element)</li>
+                <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLTextAreaElement">HTMLTextAreaElement</a> (represents a <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea">&lt;textarea&gt;</a> element)</li>
+              </ul>
+            </li>
+            <li>validationMessage -localized message describing the validation constraints that the control doesn't satisfy (if any) - empty string if not validatable (willValidate - false) or is valid</li>
+            <li>validity - Returns a ValidityState object that contains several properties describing the validity state of the element. (valid: Returns true if the element meets all its validation constraints, and is therefore considered to be valid, or false if it fails any constraint)</li>
+            <li>checkValidity(): Returns true if the element's value has no validity problems; false otherwise. If the element is invalid, this method also fires an <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/invalid_event">invalid event</a> on the element.</li>
+            <li>setCustomValidity(<em>message</em>): Adds a custom error message to the element; if you set a custom error message, the element is considered to be invalid, and the specified error is displayed.</li>
+            <li>form <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/novalidate">novalidate</a> attribute turns off browser automatic validation - <em>never used that one before!</em></li>
+          </ul>
+      </div>
+      <div class="container fullrow">
+        <h3>MDN: Using Fetch</h3>
+        <ul>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch API</a> provides a JavaScript interface for accessing and manipulating parts of the HTTP pipeline, such as requests and responses<strong>.</strong></li>
+          <li><strong>fetch() replaces XMLHttpRequest</strong></li>
+          <li>similar to JQuery.ajax(), but:
+            <ul>
+              <li>fetch() will not reject on HTTP error status only network failure, etc. (<strong>check ok flag in addition!</strong>)</li>
+              <li>fetch() <strong>won&rsquo;t send cross-origin cookies</strong></li>
+            </ul>
+          </li>
+          <li>Example: fetch('http://example.com/movies.json').then(response =&gt; response.json())    .then(data =&gt; console.log(data));</li>
+          <li>fetch() method can optionally accept a second parameter, an init object</li>
+          <li>e.g:
+            <pre>{method: 'POST',
+mode: 'cors',
+cache: 'no-cache',
+credentials: 'same-origin',
+headers: {'Content-Type': 'application/json'},
+redirect: 'follow', 
+referrerPolicy: 'no-referrer',
+body: JSON.stringify(data) // body data type must match "Content-Type" header
+}</pre>
+          </li>
+          <li>Credentials
+            <ul>
+              <li>included on both same-origin and cross-origin calls, add credentials: 'include'</li>
+              <li>vs credentials: 'same-origin' or credentials: 'omit'</li>
+            </ul>
+          </li>
+          <li>Use <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch" title="fetch()">fetch()</a> to POST JSON-encoded data</li>
+          <li>
+            <pre>const data = { username: 'example' };
+fetch('https://example.com/profile', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+})
+.then(response =&gt; response.json())
+.then(data =&gt; {
+  console.log('Success:', data);
+})
+.catch((error) =&gt; {
+  console.error('Error:', error);
+});</pre>
+          </li>
+          <li>Uploading a file</li>
+          <li>
+            <pre>const formData = new FormData();
+const fileField = document.querySelector('input[type="file"]');
+
+formData.append('username', 'abc123');
+formData.append('avatar', fileField.files[0]);
+
+fetch('https://example.com/profile/avatar', {
+  method: 'PUT',
+  body: formData
+})
+.then(response =&gt; response.json())
+.then(result =&gt; {
+  console.log('Success:', result);
+})
+.catch(error =&gt; {
+  console.error('Error:', error);
+});</pre>
+          </li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch" title="fetch()">fetch()</a> promise will reject with a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError">TypeError</a> when a network error is encountered or CORS is misconfigured on the server-side, although this usually means permission issues or similar</li>
+          <li>Checking for success:
+            <pre>fetch('flowers.jpg').then(response =&gt; {
+   if (!response.ok) {throw new Error('Network response was not ok');}
+   return response.blob();
+})
+.then(myBlob =&gt; {myImage.src = URL.createObjectURL(myBlob);})
+.catch(error =&gt; {console.error('There has been a problem with your fetch operation:', error);});</pre>
+          </li>
+          <li> Request objects allow to set up url and options separately from the fetch() call</li>
+          <li>Request (and Response) objects can only be used once, but a copy can be made before the use:<br>
+          const anotherRequest = new Request(myRequest, myInit); OR use <a href="https://developer.mozilla.org/en-US/docs/Web/API/Request/clone" title="clone()">clone()</a></li>
+          <li>Headers object allows to set up headers:
+            <pre>const myHeaders = new Headers();
+myHeaders.append('Content-Type', 'text/plain');</pre>
+            <ul>
+              <li>or
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <blockquote>
+          <pre>const myHeaders = new Headers({
+   'Content-Type': 'text/plain',
+   'Content-Length': content.length.toString(),
+   'X-Custom-Header': 'ProcessThisImmediately'
+});</pre>
+        </blockquote>
+        <ul>
+          <ul>
+            <li>can use has(), set() and get() methods to change...</li>
+            <li>Useful for ServiceWorkers</li>
+          </ul>
+          <li>Response objects
+            <ul>
+              <li>.status integer containing http status code (see .StatusText for string version)</li>
+              <li>.ok boolean that is true when status is 200-299</li>
+              <li>see <a href="https://developer.mozilla.org/en-US/docs/Web/API/FetchEvent/respondWith" title="respondWith()">respondWith()</a> for ServiceWorkers intercepting fetch events</li>
+            </ul>
+          </li>
+          <li>requests and responses may contain body data
+            <ul>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">ArrayBuffer</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/ArrayBufferView">ArrayBufferView</a> (Uint8Array and friends)</li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Blob">Blob</a>/File</li>
+              <li>string</li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams">URLSearchParams</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/FormData">FormData</a></li>
+            </ul>
+          </li>
+          <li>The <a href="https://developer.mozilla.org/en-US/docs/Web/API/Body">Body</a> mixin defines the following methods to extract a body (implemented by both <a href="https://developer.mozilla.org/en-US/docs/Web/API/Request">Request</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/Response">Response</a>). These all return a promise that is eventually resolved with the actual content.
+            <ul>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Body/arrayBuffer" title="arrayBuffer()">arrayBuffer()</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Body/blob" title="blob()">blob()</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Body/json" title="json()">json()</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Body/text" title="text()">text()</a></li>
+              <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Body/formData" title="formData()">formData()</a>          </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </main>
+</body>
+
+</html>
