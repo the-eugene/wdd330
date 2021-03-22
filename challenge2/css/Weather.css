@@ -1,0 +1,85 @@
+:root{
+  --dim: 200px;
+}
+main{
+  max-width: 920px;
+}
+
+figure{
+  margin:0;
+  display: grid;
+  grid-template-rows: calc(var(--dim) - 20px) 20px;
+}
+
+#WeatherContainer {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 10px;
+  border: 1px solid black;
+  padding: 10px;
+}
+
+.weather.small{
+  width: var(--dim);
+  height: var(--dim);
+  overflow: hidden;
+}
+
+.box.weather.spin:before {
+  display: block;
+  position: absolute;
+  content: '';
+  background: url('../img/loading.svg') center no-repeat;
+  background-size: calc(var(--dim)/2);
+  width: var(--dim);
+  height: var(--dim);
+}
+
+.weather figcaption{
+  color: #222;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.weather .inside{
+  position: relative;
+  background: #e5eeff;
+  border: 1px solid #777;
+  border-radius: 10px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "head head" "icon temp" "other other";
+  color: #777;
+}
+
+.inside .conditions{
+  grid-area: head;
+  font-size: 25px;
+}
+
+.inside .icon{
+  grid-area: icon;
+  font-size: 50px;
+}
+
+.inside .temperature {
+  grid-area: temp;
+  font-size: 50px;
+}
+
+.inside .other {
+  grid-area: other;
+  font-size: 20px;
+}
+
+.inside .delete{
+  position: absolute;
+  top: 5px; 
+  right: 5px;
+  width: 20px;
+  height: 20px;
+  background: url('../img/remove.svg') center no-repeat;
+  background-size: contain;
+}
