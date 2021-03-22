@@ -2,7 +2,7 @@ import {fetchAPI} from './ApiFunctions.js';
 const settings={
     ApiKey: "4d32b7c9c454302615b0835a8e551936",
     units: "imperial",
-    base_url: 'http://api.openweathermap.org/data/2.5/',
+    base_url: 'https://api.openweathermap.org/data/2.5/',
     current_word: "weather",
     forecast_word: "forecast",
   }

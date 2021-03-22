@@ -1,7 +1,7 @@
 import {fetchAPI} from './ApiFunctions.js';
 const settings = {
     ApiKey: "GNAvIs0EerfHv9i2Xxhv1Zn5N0sPICQk",
-    BaseURL: 'http://www.mapquestapi.com/geocoding/v1/address',
+    BaseURL: 'https://www.mapquestapi.com/geocoding/v1/address',
 
 }
 
