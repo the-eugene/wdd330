@@ -6,7 +6,7 @@ export default class Box extends Container{
         parent.container=parent; //because this is the top of the tree
         super(parent,{tag:"figure", classes:['weather','small']});
         this.startSpinner() //always start spinning on creation because it should at least update weather 
-        this.weather=new Container(this,{classes: ['inside']});
+        this.weather=new Container(this,{classes: ['inside'], click: this.expand.bind(this)});
         this.place=new Container(this,{tag:"figcaption"});
     }
     startSpinner(){
@@ -32,11 +32,18 @@ export default class Box extends Container{
                 Feels Like: ${r.main.feels_like.toFixed(0)}&deg;<br>
                 Humidity: ${r.main.humidity}%
             </div>`;
-            this.delButton=new Container(this.weather,{classes:["delete"], click:this.remove});
+            this.delButton=new Container(this.weather,{classes:["delete"], click:this.remove.bind(this)});
             this.stopSpinner();
         });
     }
-    remove(e){
-        
+    remove(){
+        this.parent.deleteLocation(this.place.location);
+        this.delete();
+    }
+
+    expand(){
+        this.parent.makeSmall();
+        this.container.classList.toggle("large");
+        this.container.classList.toggle("small");
     }
 }

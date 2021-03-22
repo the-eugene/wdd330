@@ -18,3 +18,7 @@ const settings={
   export async function getCurrentWeather(location='70726'){
     return await fetchAPI(buildWeatherUrl(settings.current_word, location));
   }
+
+  export async function get5DayWeather(location='70726'){
+    return await fetchAPI(buildWeatherUrl(settings.forecast_word, location));
+  }

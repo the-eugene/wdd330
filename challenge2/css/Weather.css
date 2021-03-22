@@ -2,19 +2,21 @@
   --dim: 200px;
 }
 main{
-  max-width: 920px;
+  max-width: 950px;
 }
 
 figure{
   margin:0;
   display: grid;
-  grid-template-rows: calc(var(--dim) - 20px) 20px;
+  grid-template-rows: calc(100% - 20px) 20px;
+
 }
 
 #WeatherContainer {
-  display: flex;
-  flex-flow: row wrap;
+  display: grid;
   gap: 10px;
+  grid-template-columns: repeat(auto-fill, var(--dim));
+  grid-auto-rows: var(--dim);
   border: 1px solid black;
   padding: 10px;
 }
@@ -25,14 +27,16 @@ figure{
   overflow: hidden;
 }
 
-.box.weather.spin:before {
+.weather.spin:before {
   display: block;
   position: absolute;
   content: '';
-  background: url('../img/loading.svg') center no-repeat;
+  border: 1px solid #777;
+  background: #fff url('../img/loading.svg') center no-repeat;
   background-size: calc(var(--dim)/2);
   width: var(--dim);
   height: var(--dim);
+  z-index: 99;
 }
 
 .weather figcaption{
@@ -82,4 +86,9 @@ figure{
   height: 20px;
   background: url('../img/remove.svg') center no-repeat;
   background-size: contain;
+}
+
+.weather.large{
+  grid-row: 1 / span 2;
+  grid-column: 1/ span 2;
 }
