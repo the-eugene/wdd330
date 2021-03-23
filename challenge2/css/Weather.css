@@ -46,21 +46,29 @@ figure{
   text-align: center;
 }
 
-.weather.large .forecast.inside,
-.weather.small .current.inside{
+.forecast.inside,
+.current.inside{
   position: relative;
   background: #e5eeff;
   border: 1px solid #777;
   border-radius: 10px;
   padding: 10px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas: "head head" "icon temp" "other other";
   color: #777;
 }
 
-.weather.small .forecast.inside,
-.weather.large .current.inside{display: none;}
+.current.inside{
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "head head" "icon temp" "other other";
+}
+
+.forecast.inside
+{
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-areas: "head head head head head head head head" "icon icon temp temp other other other other";
+}
+
+.weather.small .forecast.inside, .weather.large .current.inside{display: none;}
+.weather.small .current.inside, .weather.large .forecast.inside{display: grid;}
 
 .inside .conditions{
   grid-area: head;

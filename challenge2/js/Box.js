@@ -23,12 +23,13 @@ export default class Box extends Container{
         this.place.text=location.location;
         getCurrentWeather(location).then(r=>{
             this.weather.container.innerHTML=`<div class="conditions">${r.weather[0].main}</div>
-            <div class="icon">${this.buildIcon(r)}</div>
+            <div class="icon">${this.buildIcon(r.dt,r.sys.sunrise,r.sys.sunset,r.weather[0].id)}</div>
             <div class="temperature">${r.main.temp.toFixed(0)}&deg;</div>
             <div class="other">
                 Feels Like: ${r.main.feels_like.toFixed(0)}&deg;<br>
                 Humidity: ${r.main.humidity}%
             </div>`;
+            this.forecast.container.innerHTML=this.weather.container.innerHTML;
             this.delButton=new Container(this.weather,{classes:["delete"], click:this.remove.bind(this)});
             this.stopSpinner();
         });
@@ -43,8 +44,9 @@ export default class Box extends Container{
         this.startSpinner();        
         get5DayWeather(this.place.location).then(r=>{
             console.log(r);
-            this.forecast.container.innerHTML = "Big Storm Coming";
-            //`<div class="conditions">${r.weather[0].main}</div>
+            r.list.forEach(time => {
+                this.forecast.container.innerHTML+=`<div>${this.buildIcon(time.dt,r.city.sunrise,r.city.sunset,time.weather[0].id)}</div>`
+            });
             // <div class="icon">
             // <i class="wi wi-owm-${period}-${r.weather[0].id}"></i></div>
             // <div class="temperature">${r.main.temp.toFixed(0)}&deg;</div>
@@ -60,10 +62,7 @@ export default class Box extends Container{
         })
     }
 
-    buildIcon(r){
-        return '<i class="wi wi-owm-'+
-        (r.dt>=r.sys.sunrise&&r.dt<=r.sys.sunset?'day':'night')+
-        '-'+r.weather[0].id+'"></i>';
-
+    buildIcon(date, sunrise, sunset,id){
+        return '<i class="wi wi-owm-'+(date>=sunrise&&date<=sunset?'day':'night')+'-'+id+'"></i>';
     }
 }
