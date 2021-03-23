@@ -1,18 +1,49 @@
 import {fetchAPI} from './ApiFunctions.js';
 const settings = {
     ApiKey: "GNAvIs0EerfHv9i2Xxhv1Zn5N0sPICQk",
-    BaseURL: 'https://www.mapquestapi.com/geocoding/v1/address',
-
+    BaseURL: 'https://www.mapquestapi.com/geocoding/v1/',
+    forward: 'address',
+    reverse: 'reverse',
+    debug: false
 }
 
 export function getGeoLocation(query=null) {
+    settings.debug && console.debug("Getting Location for: '"+query+"'");
     if(!query){
-       if(navigator.geolocation){
-        return getCurrentPosition().then(r=>{return {'location':"Local Weather", 'lat':r.coords.latitude, 'lon':r.coords.longitude}});
-       }
-       query="Denham Springs, LA";
+        settings.debug && console.debug("Empty query, attempting geolocation API");
+        if(navigator.geolocation){
+            settings.debug && console.debug("Getting location from geolocation API");
+            return getCurrentPosition()
+            .then(r=>{
+                    settings.debug && console.debug(`Got ${r.coords.latitude} by ${r.coords.longitude}`);
+                    return fetchAPI(buildMapQuestURL(settings.reverse,r.coords.latitude + ','+ r.coords.longitude))
+                    .then(parseMapQuestResults);
+                });
+        } else query="Denham Springs, LA";
     }
-    return fetchAPI(buildMapQuestURL(query)).then(parseMapQuestResults);
+    return fetchAPI(buildMapQuestURL(settings.forward,query)).then(parseMapQuestResults);
+}
+
+function buildMapQuestURL(word,location) {
+    let url=`${settings.BaseURL}${word}?key=${settings.ApiKey}&location=${location}`;
+    settings.debug && console.debug("MapQuest URL:", url);
+    return url;
+}
+
+function parseMapQuestResults(result){
+    settings.debug && console.debug("JSON:",result);
+    try{
+        let lSet=result.results[0].locations;
+        if (lSet.length>1) {console.warn("Multiple Locations Found, using the first one");}
+        settings.debug && console.log("Fetched:", lSet[0]);
+        if (lSet[0].geocodeQuality=="COUNTRY" || lSet[0].geocodeQuality=="STATE") throw new Error("Precise Location Not Found");
+        return {
+            'location': buildLocationString(lSet[0].adminArea5, lSet[0].adminArea3, lSet[0].adminArea1=='US'?'':lSet[0].adminArea1),
+            'lat': lSet[0].latLng.lat,
+            'lon': lSet[0].latLng.lng
+        };
+    }
+    catch (e){console.error(e);}
 }
 
 function getCurrentPosition(options={}){
@@ -21,19 +52,6 @@ function getCurrentPosition(options={}){
     );
 }
 
-function buildMapQuestURL(location) {
-    return `${settings.BaseURL}?key=${settings.ApiKey}&location=${location}`;
-}
-function parseMapQuestResults(result){
-    try{
-        let lSet=result.results[0].locations;
-        if (lSet.length>1) console.error("Multiple Locations Found");
-        if (lSet[0].AdminArea5) console.error("No City Found");
-        return {
-            'location': `${lSet[0].adminArea5}, ${lSet[0].adminArea3}`,
-            'lat': lSet[0].latLng.lat,
-            'lon': lSet[0].latLng.lng
-        };
-    }
-    catch (e){console.error(e);}
+function buildLocationString(...args){
+    return args.filter(a=>a).join(", ");
 }

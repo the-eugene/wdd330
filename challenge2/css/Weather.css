@@ -46,7 +46,8 @@ figure{
   text-align: center;
 }
 
-.weather .inside{
+.weather.large .forecast.inside,
+.weather.small .current.inside{
   position: relative;
   background: #e5eeff;
   border: 1px solid #777;
@@ -57,6 +58,9 @@ figure{
   grid-template-areas: "head head" "icon temp" "other other";
   color: #777;
 }
+
+.weather.small .forecast.inside,
+.weather.large .current.inside{display: none;}
 
 .inside .conditions{
   grid-area: head;

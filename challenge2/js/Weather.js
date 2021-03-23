@@ -2,6 +2,7 @@ import {getGeoLocation} from './MapQuest.js'
 import ls from "./ls.js";
 import Box from "./Box.js";
 
+const debug=true;
 const boxFrame=document.getElementById("WeatherContainer");
 document.getElementById('add_go').addEventListener('click',addLocation);
 var locations=ls.loadObject("weatherLocations");
@@ -12,7 +13,10 @@ function addLocation() {
   const add=document.getElementById('add_location');
   const newBox=new Box(boxFrame);
   getGeoLocation(add.value).then(r=>{
-    if (locations.find(e=>e.location==r.location)){
+    if (!r){
+      displayMessage("The location provided does not seem to be a city!");
+      newBox.delete();
+    } else if(locations.find(e=>e.location==r.location)){
       displayMessage("Could not add location: Already exists!");
       newBox.delete();
     }
@@ -26,13 +30,16 @@ function addLocation() {
   });
 }
 
-boxFrame.deleteLocation = function(location) {
-  locations=locations.filter(l=>{location.location!=l.location;});
-  uiBoxes=uiBoxes.filter(l=>{location.location!=l.place.location.location;});
+boxFrame.deleteLocation = function(toremove) {
+      debug&&console.log("Deleting: ",location);
+      debug&&console.log("Before: ",uiBoxes);
+  locations=locations.filter(l=>{return toremove.location!=l.location;});
+  uiBoxes=uiBoxes.filter(l=>{return toremove.location!=l.place.location.location;}); 
+      debug&&console.log("After: ",uiBoxes);
   ls.saveObject("weatherLocations",locations);
 }
 
-boxFrame.makeSmall=function(){
+boxFrame.toggleBox=function(){
   uiBoxes.forEach(e => {
     e.container.classList.remove("large");
     e.container.classList.add("small");
