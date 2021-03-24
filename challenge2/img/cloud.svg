@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 2000 1000">
+ <defs>
+ <filter id="cloudFilter" width="130%" height="130%" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" color-interpolation-filters="auto">
+<feGaussianBlur stdDeviation="20" result="blur1"/>
+  <feTurbulence type="fractalNoise" baseFrequency=".01" numOctaves="4" seed="5" result="turb1">
+    <animate attributeName="baseFrequency" values=".01; .015; .01" dur="60s" repeatCount="indefinite"/>
+  </feTurbulence>
+  <feTurbulence type="fractalNoise" baseFrequency=".015" numOctaves="4" seed="2" result="turb2">
+    <animate attributeName="baseFrequency" values=".015; .01; .015" dur="60s" repeatCount="indefinite"/>
+  </feTurbulence>
+  <feBlend in="turb1" in2="turb2" mode="multiply" />
+  <feDisplacementMap in="blur1"  scale="300" result="displacementMap"/>
+  </filter>
+ <path id="cloud" d="M236.26,80C236.26,123.86.5,123.86.5,80S53.28.5,118.38.5,236.26,36.08,236.26,80Z"/>
+    <g  id="CloudGroup">
+      <use x="50" y="50" xlink:href="#cloud" fill="#fffffff0" transform="scale(3.25)"/>
+      <use x="100" y="90" xlink:href="#cloud" fill="#f4f4f4" transform="scale(2.5)"/>
+      <use x="200" y="160" xlink:href="#cloud" fill="#eee" transform="scale(1.75)"/>
+    </g>
+  </defs>
+<g filter="url(#cloudFilter)">
+  <use x="0" y="200" xlink:href="#CloudGroup"/>
+  <use x="500" y="400" xlink:href="#CloudGroup"/>
+  <use x="900" y="0" xlink:href="#CloudGroup"/>
+</g>
+</svg>

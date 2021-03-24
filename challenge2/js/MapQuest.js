@@ -4,6 +4,7 @@ const settings = {
     BaseURL: 'https://www.mapquestapi.com/geocoding/v1/',
     forward: 'address',
     reverse: 'reverse',
+    zoom: 7,
     debug: false
 }
 
@@ -38,9 +39,11 @@ function parseMapQuestResults(result){
         settings.debug && console.log("Fetched:", lSet[0]);
         if (lSet[0].geocodeQuality=="COUNTRY" || lSet[0].geocodeQuality=="STATE") throw new Error("Precise Location Not Found");
         return {
-            'location': buildLocationString(lSet[0].adminArea5, lSet[0].adminArea3, lSet[0].adminArea1=='US'?'':lSet[0].adminArea1),
-            'lat': lSet[0].latLng.lat,
-            'lon': lSet[0].latLng.lng
+            location: buildLocationString(lSet[0].adminArea5, lSet[0].adminArea3, lSet[0].adminArea1=='US'?'':lSet[0].adminArea1),
+            lat: lSet[0].latLng.lat,
+            lon: lSet[0].latLng.lng,
+            x: lon2tile(lSet[0].latLng.lng,settings.zoom),
+            y: lat2tile(lSet[0].latLng.lat,settings.zoom)
         };
     }
     catch (e){console.error(e);}
@@ -55,3 +58,6 @@ function getCurrentPosition(options={}){
 function buildLocationString(...args){
     return args.filter(a=>a).join(", ");
 }
+
+function lon2tile(lon,zoom) { return (Math.floor((lon+180)/360*Math.pow(2,zoom))); }
+function lat2tile(lat,zoom) { return (Math.floor((1-Math.log(Math.tan(lat*Math.PI/180) + 1/Math.cos(lat*Math.PI/180))/Math.PI)/2 *Math.pow(2,zoom))); }

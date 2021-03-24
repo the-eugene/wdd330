@@ -1,24 +1,59 @@
 :root{
   --dim: 200px;
 }
+body{
+  background: url('../img/cloud.svg') center repeat-x,
+              url('../img/cloud.svg') center repeat-x,
+              url('../img/cloud.svg') center repeat-x;
+  background-size: 800px, 600px, 400px;
+  background-position-y: -250px, -120px, 0px;
+  animation: 20s clouds linear infinite;
+  position: relative;
+}
+
+@keyframes clouds{
+  from{
+    background-position-x: 0,200px,300px;
+  }
+  to{
+    background-position-x: 2400px,1400px,1100px;
+  }
+}
+
 main{
-  max-width: 950px;
+  max-width: 1150px;
+  width: auto;
+  margin: 0 auto;
+  margin-bottom: 50px;
+}
+
+footer{
+  position: fixed;
+  display: block;
+  padding: 10px;
+  color: white;
+  background-color: #222;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
 }
 
 figure{
   margin:0;
   display: grid;
-  grid-template-rows: calc(100% - 20px) 20px;
-
+  grid-template-rows: calc(100% - 25px) 25px;
+  position: relative;
+  border-radius: 10px;
+  box-shadow: 3px 3px 6px rgba(185, 120, 0, 0.404);
+  padding: 3px;
 }
 
 #WeatherContainer {
   display: grid;
-  gap: 10px;
   grid-template-columns: repeat(auto-fill, var(--dim));
   grid-auto-rows: var(--dim);
-  border: 1px solid black;
-  padding: 10px;
+  justify-content: space-around;
+  gap: 15px;
 }
 
 .weather.small{
@@ -31,9 +66,9 @@ figure{
   display: block;
   position: absolute;
   content: '';
-  border: 1px solid #777;
-  background: #fff url('../img/loading.svg') center no-repeat;
+  background: url('../img/loading.svg') center no-repeat;
   background-size: calc(var(--dim)/2);
+  backdrop-filter: blur(30px);
   width: var(--dim);
   height: var(--dim);
   z-index: 99;
@@ -44,17 +79,21 @@ figure{
   font-size: 15px;
   font-weight: bold;
   text-align: center;
+  padding:3px;
 }
 
 .forecast.inside,
 .current.inside{
   position: relative;
   background: #e5eeff;
-  border: 1px solid #777;
+  border: 1px solid #7774;
   border-radius: 10px;
-  padding: 10px;
   color: #777;
+  gap:10px;
+  justify-items: center;
+  align-content: space-evenly;
 }
+
 
 .current.inside{
   grid-template-columns: 1fr 1fr;
@@ -63,8 +102,8 @@ figure{
 
 .forecast.inside
 {
-  grid-template-columns: repeat(8, 1fr);
-  grid-template-areas: "head head head head head head head head" "icon icon temp temp other other other other";
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-areas: "head head head head" "icon temp other other";
 }
 
 .weather.small .forecast.inside, .weather.large .current.inside{display: none;}
@@ -90,7 +129,7 @@ figure{
   font-size: 20px;
 }
 
-.inside .delete{
+.delete{
   position: absolute;
   top: 5px; 
   right: 5px;
@@ -98,9 +137,89 @@ figure{
   height: 20px;
   background: url('../img/remove.svg') center no-repeat;
   background-size: contain;
+  z-index: 99;
 }
 
 .weather.large{
   grid-row: 1 / span 2;
   grid-column: 1/ span 2;
+}
+
+.daily {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-flow: row nowrap;
+  gap:5px;
+  width: 100%;
+  height: fit-content;
+  padding-bottom: 6px;
+  cursor: grab;
+  overflow: auto;
+  font-size: 20px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.daily::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+.day{
+  flex: none;
+  width: 75px;
+  height: 75px;
+  border: 1px solid #fdccb6;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px #ccc;
+  background: #fff6f1;
+}
+
+span.high,span.low{
+  position: absolute;
+  display:block;
+  font-weight: bold;
+}
+
+span.high{
+  color: darkred;
+  top:3px;
+  left:5px;
+}
+
+span.low{
+  color: darkblue;
+  bottom:3px;
+  right:5px;
+}
+
+.day .icon{
+  position: absolute;
+  top: 3px;
+  right: 0;
+  font-size: 30px;
+}
+
+.day .weekday{
+  position: absolute;
+  left: 5px;
+  bottom: 3px;
+  font-size: 15px;
+}
+
+.add.box{
+  padding: 30px 15px 0;
+  text-align: center;
+}
+
+.add.box *{
+  font-size: 20px;
+  padding: 10px;
+  margin: 0 20px;
+}
+
+.add.box input{
+  width: 50%;
 }

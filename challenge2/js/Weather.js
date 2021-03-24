@@ -5,6 +5,12 @@ import Box from "./Box.js";
 const debug=true;
 const boxFrame=document.getElementById("WeatherContainer");
 document.getElementById('add_go').addEventListener('click',addLocation);
+document.getElementById('add_location').addEventListener("keyup", function(event) {
+  if (event.key === "Enter") {
+      addLocation();
+  }
+});
+
 var locations=ls.loadObject("weatherLocations");
 var uiBoxes=[];
 
@@ -26,12 +32,13 @@ function addLocation() {
       newBox.update(locations.slice(-1)[0]);
       uiBoxes.push(newBox);
       if(uiBoxes.length==1) newBox.expand();
+      add.value="";
     }
   });
 }
 
 boxFrame.deleteLocation = function(toremove) {
-      debug&&console.log("Deleting: ",location);
+      debug&&console.log("Deleting: ",toremove);
       debug&&console.log("Before: ",uiBoxes);
   locations=locations.filter(l=>{return toremove.location!=l.location;});
   uiBoxes=uiBoxes.filter(l=>{return toremove.location!=l.place.location.location;}); 
