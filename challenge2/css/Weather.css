@@ -1,31 +1,65 @@
 :root{
   --dim: 200px;
 }
+
+html{font-size: 12pt;}
+
 body{
   background: url('../img/cloud.svg') center repeat-x,
-              url('../img/cloud.svg') center repeat-x,
               url('../img/cloud.svg') center repeat-x;
-  background-size: 800px, 600px, 400px;
-  background-position-y: -250px, -120px, 0px;
+  background-size: 600px, 400px;
+  background-position-y: -120px, 0px;
   animation: 20s clouds linear infinite;
   position: relative;
 }
 
 @keyframes clouds{
   from{
-    background-position-x: 0,200px,300px;
+    background-position-x: 200px,300px;
   }
   to{
-    background-position-x: 2400px,1400px,1100px;
+    background-position-x: 1400px,1100px;
+  }
+}
+
+
+body:after{
+  content:'';
+  display: block;
+  position: absolute;
+  top: 0;
+  background: url('../img/cloud.svg') center repeat-x;
+  background-size: 800px auto;
+  background-position-y: -250px;
+  width: 100%;
+  height: 200px;
+  z-index: 1;
+  animation: 7s clouds2 linear infinite;
+}
+
+
+@keyframes clouds2{
+  from{
+    background-position-x: 0;
+  }
+  to{
+    background-position-x: 800px;
   }
 }
 
 main{
-  max-width: 1150px;
-  width: auto;
+  position: relative;
   margin: 0 auto;
   margin-bottom: 50px;
+  padding:calc(var(--dim) * .075);
+  z-index: 2;
 }
+
+@media only screen and (min-width: 450px) {main{max-width: 440px;}}
+@media only screen and (min-width: 750px) {main{max-width: 660px;}}
+@media only screen and (min-width: 1000px) {main{max-width: 875px;}}
+@media only screen and (min-width: 1300px) {main{max-width: 1100px;}}
+
 
 footer{
   position: fixed;
@@ -36,6 +70,7 @@ footer{
   bottom: 0;
   text-align: center;
   width: 100%;
+  z-index:99;
 }
 
 figure{
@@ -53,7 +88,7 @@ figure{
   grid-template-columns: repeat(auto-fill, var(--dim));
   grid-auto-rows: var(--dim);
   justify-content: space-around;
-  gap: 15px;
+  gap: calc(var(--dim) * .075);
 }
 
 .weather.small{
@@ -68,15 +103,16 @@ figure{
   content: '';
   background: url('../img/loading.svg') center no-repeat;
   background-size: calc(var(--dim)/2);
-  backdrop-filter: blur(30px);
-  width: var(--dim);
-  height: var(--dim);
-  z-index: 99;
+  backdrop-filter: blur(20px);
+  width: 100%;
+  height: 100%;
+  z-index: 98;
+  
 }
 
 .weather figcaption{
   color: #222;
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: bold;
   text-align: center;
   padding:3px;
@@ -89,7 +125,7 @@ figure{
   border: 1px solid #7774;
   border-radius: 10px;
   color: #777;
-  gap:10px;
+  gap:5px;
   justify-items: center;
   align-content: space-evenly;
 }
@@ -111,22 +147,22 @@ figure{
 
 .inside .conditions{
   grid-area: head;
-  font-size: 25px;
+  font-size: 1.4rem;
 }
 
 .inside .icon{
   grid-area: icon;
-  font-size: 50px;
+  font-size: 3.5rem;
 }
 
 .inside .temperature {
   grid-area: temp;
-  font-size: 50px;
+  font-size: 3.5rem;
 }
 
 .inside .other {
   grid-area: other;
-  font-size: 20px;
+  font-size: 1.4rem;
 }
 
 .delete{
@@ -137,12 +173,12 @@ figure{
   height: 20px;
   background: url('../img/remove.svg') center no-repeat;
   background-size: contain;
-  z-index: 99;
+  z-index: 98;
 }
 
 .weather.large{
-  grid-row: 1 / span 2;
-  grid-column: 1/ span 2;
+  grid-row: span 2; /* 1 / span 2;*/
+  grid-column: span 2;
 }
 
 .daily {
@@ -155,7 +191,7 @@ figure{
   padding-bottom: 6px;
   cursor: grab;
   overflow: auto;
-  font-size: 20px;
+  font-size:1.3rem;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -163,8 +199,6 @@ figure{
 .daily::-webkit-scrollbar {
   display: none;
 }
-
-
 
 .day{
   flex: none;
@@ -199,27 +233,171 @@ span.low{
   position: absolute;
   top: 3px;
   right: 0;
-  font-size: 30px;
+  font-size: 1.8rem;
 }
 
 .day .weekday{
   position: absolute;
   left: 5px;
   bottom: 3px;
-  font-size: 15px;
+  font-size: 1rem;
+}
+
+.hourly {
+  position: relative;
+  grid-column: 1 / -1;
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: fit-content;
+  cursor: grab;
+  overflow: auto;
+  font-size:1.3rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hourly::-webkit-scrollbar {
+  display: none;
+}
+
+.hour{
+  flex: none;
+  position: relative;
+  height: 150px;
+  width: 30px;
+  background:linear-gradient(rgb(255 79 0 / 0.25),rgb(2 185 0 / 0.0),rgb(0 87 185 / 25%));
+  border-left: 1px solid #2222;
+}
+
+.hour.daybreak{
+  border-left: 4px double #22f2;
+}
+
+.hour .temp_bar{
+display:block;
+width: 100%;
+position: absolute;
+border-top: 2px solid #7776;
+bottom: 0;
+color:#2224;
+font-size: .9rem;
+text-align: right;
+text-shadow: 0 0 3px #fff;
+}
+
+.hour .temp_time{
+  display: block;
+  margin: 15px auto;
+  font-size: 1rem;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  color: #7774
+}
+
+.limit{
+  position: absolute;
+  left:3px;
+  font-size: .8rem;
+}
+
+.limit.min{
+  bottom: 0;
+  color: darkblue;
+}
+
+.limit.max{
+  top: 0;
+  color:darkred;
 }
 
 .add.box{
-  padding: 30px 15px 0;
-  text-align: center;
+  padding: 0 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
 }
 
 .add.box *{
-  font-size: 20px;
-  padding: 10px;
-  margin: 0 20px;
+  display: block;
+  font-size: 1.1rem;
+  justify-content: flex-start;
 }
 
 .add.box input{
-  width: 50%;
+  width: 100%;
+  padding: 5px;
+}
+
+.add.box button{
+  flex: none;
+  padding: 12px;
+}
+
+#Message{
+  color: red;
+  height:0;
+  overflow: hidden;
+  transition: all .5s;
+  text-align: center;
+  font-size: 18px;
+  border: 1px solid #aaa;
+  margin: 15px;
+}
+
+#Message.active {
+  height: 42px;
+  padding:10px;
+}
+#add_go{position: relative;}
+#add_go.spin::before{
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 99;
+  top: -10%;
+  left:-10%;
+  width: 120%;
+  height: 120%;
+  backdrop-filter: blur(20px);
+  background-size: contain;
+  background: url(../img/loading.svg) center no-repeat;
+}
+
+
+@media only screen and (max-width: 450px) {
+  :root{
+    --dim: 150px;
+  }
+  html{font-size: 9pt;}
+  footer{
+    position: unset;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  html{font-size: 8pt;}
+  main{
+    padding:2px;
+    margin: 0;
+    gap:0;
+  }
+
+  #WeatherContainer{
+    display:flex;
+    flex-flow: column;
+    gap:1px;
+  }
+  figure{
+    box-shadow: none;
+    border: 1px solid #7777;
+  }
+  .weather.large .forecast.inside{
+    display: flex;
+    flex-direction: column;
+  }
+  .daily, .hourly{
+    flex-flow: row wrap;
+  }
+  .hour{flex: 1;}
 }

@@ -1,6 +1,6 @@
 import {fetchAPI} from './ApiFunctions.js';
 const settings={
-    debug: true,
+    debug: false,
     ApiKey: "4d32b7c9c454302615b0835a8e551936",
     units: "imperial",
     base_url: 'https://api.openweathermap.org/data/2.5/',

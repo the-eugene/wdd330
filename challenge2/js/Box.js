@@ -1,6 +1,8 @@
 import Container from './Container.js';
 import {getCurrentWeather, getOneCall} from './OpenWeather.js';
 
+let debug=false;
+
 export default class Box extends Container{
     constructor(parent){
         parent.container=parent; //because this is the top of the tree
@@ -12,18 +14,16 @@ export default class Box extends Container{
         this.place=new Container(this,{tag:"figcaption"});
     }
     startSpinner(){
-        this.spinning=true;
-        this.container.classList.toggle("spin");
+        this.container.classList.add("spin");
     }
     stopSpinner(){
-        this.spinning=false;
-        this.container.classList.toggle("spin");
+        this.container.classList.remove("spin");
     }
     update(location){
         this.place.location=location;
         this.place.text=location.location;
         getOneCall(location).then(r=>{
-            console.log(r);
+            debug&&console.log(r);
             let current=r.current;
             this.weather.container.innerHTML=`<div class="conditions">${current.weather[0].main}</div>
             <div class="icon">${this.buildIcon(r.dt,r.sunrise,r.sunset,current.weather[0].id)}</div>
@@ -32,12 +32,9 @@ export default class Box extends Container{
                 Feels Like: ${current.feels_like.toFixed(0)}&deg;<br>
                 Humidity: ${current.humidity}%
             </div>`;
-            
+            this.forecast.container.innerHTML=this.weather.container.innerHTML;
             let daily = document.createElement('div');
             daily.classList.add('daily');
-            this.forecast.container.innerHTML=this.weather.container.innerHTML;
-            this.forecast.container.appendChild(daily);
-            daily.addEventListener('mousedown',startScroll.bind(daily));
             r.daily.forEach(day => {
                 let weekday=(["Sun","Mon","Tue","Wed","Thu","Fri","Sat"])[new Date(day.dt * 1000).getDay()];
                 daily.innerHTML+=
@@ -50,9 +47,35 @@ export default class Box extends Container{
                     </div>
                 </div>`;
             });
+            let hourly = document.createElement('div');
+            hourly.classList.add('hourly');
+            let tempStats=r.hourly.reduce(
+                (t,h)=>{
+                    t.avg+=h.temp/r.hourly.length;
+                    t.min=Math.min(t.min, h.temp);
+                    t.max=Math.max(t.max, h.temp);
+                    return t;
+                },{avg: 0, min: r.hourly[0].temp, max: r.hourly[0].temp});
+                tempStats.range=tempStats.max-tempStats.min;
+                hourly.innerHTML=
+                `<div class="limit min">Min:${tempStats.min.toFixed(0)}&deg;</div>
+                <div class="limit max">Max:${tempStats.max.toFixed(0)}&deg;</div>`
+            r.hourly.forEach(hour=>{
+                let time=new Date(hour.dt * 1000).getHours();
+                hourly.innerHTML+=
+                `<div class="hour ${time==0?' daybreak':''}">
+                    <div class="temp_time">${(time+11) % 12+1} ${time>11?'pm':'am'}</div>
+                    <div class="temp_bar" style="height:${(hour.temp-tempStats.min)*100/tempStats.range}%;">${hour.temp.toFixed(0)}&deg;</div>
+                </div>`
+            });
+            this.forecast.container.appendChild(hourly);
+            hourly.addEventListener('mousedown',startScroll.bind(hourly));
+            this.forecast.container.appendChild(daily);
+            daily.addEventListener('mousedown',startScroll.bind(daily));
             this.stopSpinner();
         });
     }
+
     remove(e){
         e.stopPropagation();
         this.parent.deleteLocation(this.place.location);

@@ -15,18 +15,17 @@ var locations=ls.loadObject("weatherLocations");
 var uiBoxes=[];
 
 function addLocation() {
-  displayMessage("");
   const add=document.getElementById('add_location');
-  const newBox=new Box(boxFrame);
+  startAddSpin();
   getGeoLocation(add.value).then(r=>{
+    stopAddSpin();
     if (!r){
       displayMessage("The location provided does not seem to be a city!");
-      newBox.delete();
     } else if(locations.find(e=>e.location==r.location)){
       displayMessage("Could not add location: Already exists!");
-      newBox.delete();
     }
     else{
+      const newBox=new Box(boxFrame);
       locations.push(r);
       ls.saveObject("weatherLocations",locations);
       newBox.update(locations.slice(-1)[0]);
@@ -54,8 +53,14 @@ boxFrame.toggleBox=function(){
 }
 
 function displayMessage(message){
-  document.getElementById("Message").innerHTML=message;
+  let mbox=document.getElementById("Message");
+  mbox.innerHTML=message;
+  mbox.classList.add('active');
+  setTimeout(()=>mbox.classList.remove('active'),5000);
+
 }
+function startAddSpin(){document.getElementById('add_go').classList.add("spin");}
+function stopAddSpin(){document.getElementById('add_go').classList.remove("spin");}
 
 locations.forEach(l => {
   const b=new Box(boxFrame);
