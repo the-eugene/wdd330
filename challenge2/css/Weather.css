@@ -2,7 +2,9 @@
   --dim: 200px;
 }
 
-html{font-size: 12pt;}
+html{
+  font-size: 12pt;
+}
 
 body{
   background: url('../img/cloud.svg') center repeat-x,
@@ -251,7 +253,8 @@ span.low{
   width: 100%;
   height: fit-content;
   cursor: grab;
-  overflow: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
   font-size:1.3rem;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -262,10 +265,11 @@ span.low{
 }
 
 .hour{
+  box-sizing: content-box;
   flex: none;
   position: relative;
   height: 150px;
-  width: 30px;
+  width: 20px;
   background:linear-gradient(rgb(255 79 0 / 0.25),rgb(2 185 0 / 0.0),rgb(0 87 185 / 25%));
   border-left: 1px solid #2222;
 }
@@ -281,7 +285,7 @@ position: absolute;
 border-top: 2px solid #7776;
 bottom: 0;
 color:#2224;
-font-size: .9rem;
+font-size: .8rem;
 text-align: right;
 text-shadow: 0 0 3px #fff;
 }
@@ -289,7 +293,7 @@ text-shadow: 0 0 3px #fff;
 .hour .temp_time{
   display: block;
   margin: 15px auto;
-  font-size: 1rem;
+  font-size: .9rem;
   writing-mode: vertical-rl;
   text-orientation: mixed;
   color: #7774
@@ -373,6 +377,7 @@ text-shadow: 0 0 3px #fff;
   footer{
     position: unset;
   }
+  .hour{height: 100px;}
 }
 
 @media only screen and (max-width: 320px) {
@@ -392,12 +397,13 @@ text-shadow: 0 0 3px #fff;
     box-shadow: none;
     border: 1px solid #7777;
   }
-  .weather.large .forecast.inside{
-    display: flex;
-    flex-direction: column;
+
+  .day{
+    width: 50px;
+    height: 50px;
   }
-  .daily, .hourly{
-    flex-flow: row wrap;
+  .hour{
+    width: 20px;
+    border: none;
   }
-  .hour{flex: 1;}
 }
