@@ -1,12 +1,12 @@
 import {fetchAPI} from './ApiFunctions.js';
 const settings={
-    debug: false,
     ApiKey: "4d32b7c9c454302615b0835a8e551936",
     units: "imperial",
     base_url: 'https://api.openweathermap.org/data/2.5/',
     current_word: "weather", //current weather only
     forecast_word: "forecast", //5 day 3 hour blocks
-    onecall_word: "onecall" //current, 60*1 minute, 48*1 hour, 7*day, alerts, historical. Requires lat/lon 
+    onecall_word: "onecall", //current, 60*1 minute, 48*1 hour, 7*day, alerts, historical. Requires lat/lon 
+    debug: false
   }
 
   function buildWeatherUrl(word, location,options={}){
@@ -24,11 +24,11 @@ const settings={
     return url;
   }
 
-  export async function getCurrentWeather(location='70726'){
+  export async function getCurrentWeather(location='70726'){ //no longer used
     return await fetchAPI(buildWeatherUrl(settings.current_word, location));
   }
 
-  export async function get5DayWeather(location='70726'){
+  export async function get5DayWeather(location='70726'){ //no longer used
     return await fetchAPI(buildWeatherUrl(settings.forecast_word, location));
   }
 

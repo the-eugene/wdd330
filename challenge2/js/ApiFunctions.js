@@ -4,5 +4,6 @@ export async function fetchAPI(url) {
     .then(r=>r.json())
     .catch((error) => {
         console.error('Error:', error);
+        return false;
       });
   }

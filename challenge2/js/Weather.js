@@ -20,6 +20,8 @@ function addLocation() {
   getGeoLocation(add.value).then(r=>{
     stopAddSpin();
     if (!r){
+      displayMessage("Failed to get location");
+    } else if(r=="none"){
       displayMessage("The location provided does not seem to be a city!");
     } else if(locations.find(e=>e.location==r.location)){
       displayMessage("Could not add location: Already exists!");

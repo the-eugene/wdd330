@@ -19,8 +19,12 @@ export function getGeoLocation(query=null) {
                     settings.debug && console.debug(`Got ${r.coords.latitude} by ${r.coords.longitude}`);
                     return fetchAPI(buildMapQuestURL(settings.reverse,r.coords.latitude + ','+ r.coords.longitude))
                     .then(parseMapQuestResults);
+                },
+                r=>{
+                    settings.debug && console.log("Permission Rejected? I'm dejected. Default injected.");
+                    return fetchAPI(buildMapQuestURL(settings.forward,"Rexburg, ID")).then(parseMapQuestResults);
                 });
-        } else query="Denham Springs, LA";
+        } else query="Rexburg, ID";
     }
     return fetchAPI(buildMapQuestURL(settings.forward,query)).then(parseMapQuestResults);
 }
@@ -32,21 +36,27 @@ function buildMapQuestURL(word,location) {
 }
 
 function parseMapQuestResults(result){
-    settings.debug && console.debug("JSON:",result);
-    try{
-        let lSet=result.results[0].locations;
-        if (lSet.length>1) {console.warn("Multiple Locations Found, using the first one");}
-        settings.debug && console.log("Fetched:", lSet[0]);
-        if (lSet[0].geocodeQuality=="COUNTRY" || lSet[0].geocodeQuality=="STATE") throw new Error("Precise Location Not Found");
-        return {
-            location: buildLocationString(lSet[0].adminArea5, lSet[0].adminArea3, lSet[0].adminArea1=='US'?'':lSet[0].adminArea1),
-            lat: lSet[0].latLng.lat,
-            lon: lSet[0].latLng.lng,
-            x: lon2tile(lSet[0].latLng.lng,settings.zoom),
-            y: lat2tile(lSet[0].latLng.lat,settings.zoom)
-        };
+    if(result){
+        settings.debug && console.debug("JSON:",result);
+        try{
+            let lSet=result.results[0].locations;
+            if (lSet.length>1) {console.warn("Multiple Locations Found, using the first one");}
+            settings.debug && console.log("Fetched:", lSet[0]);
+            if (lSet[0].geocodeQuality=="COUNTRY" || lSet[0].geocodeQuality=="STATE") throw new Error("Precise Location Not Found");
+            return {
+                location: buildLocationString(lSet[0].adminArea5, lSet[0].adminArea3, lSet[0].adminArea1=='US'?'':lSet[0].adminArea1),
+                lat: lSet[0].latLng.lat,
+                lon: lSet[0].latLng.lng,
+                x: lon2tile(lSet[0].latLng.lng,settings.zoom),
+                y: lat2tile(lSet[0].latLng.lat,settings.zoom)
+            };
+        }
+        catch (e){
+            console.error(settings.debug?e:"Is that really a place?");
+            return 'none';
+        }
     }
-    catch (e){console.error(e);}
+    else {settings.debug && console.debug("Nothing was returned from MapQuest API");}
 }
 
 function getCurrentPosition(options={}){
